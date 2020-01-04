@@ -4,7 +4,9 @@ import { Component } from "react";
 import {render} from 'react-dom';
 import ReactDOM from 'react-dom';
 // import mapDisplay from './components/testMapDisplay.jsx'
-import SimpleMap from './components/mapDisplay.jsx';
+import MapDisplay from './components/mapDisplay.jsx';
+import MarkerForm from './components/markerForm.jsx';
+import ImageDisplay from './components/imageDisplay.jsx';
 
 
 //this one renders ya know the app.
@@ -36,8 +38,9 @@ export default class App extends Component {
     render() {
         return (
             <div id="map">This is the app.jsx div
-            
-            <SimpleMap/>
+            <ImageDisplay/>
+            <MapDisplay/>
+            <MarkerForm/>
             </div>
             
 
