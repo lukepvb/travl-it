@@ -1,0 +1,43 @@
+{
+  "name": "mainproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./server/server.js",
+    "dev": "NODE_ENV=development webpack-dev-server --open",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/egrobar/mainProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/egrobar/mainProject/issues"
+  },
+  "homepage": "https://github.com/egrobar/mainProject#readme",
+  "dependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "babel-loader": "^8.0.6",
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.0.2",
+    "css-loader": "^3.4.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.8.4",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "style-loader": "^1.1.2",
+    "webpack": "^4.41.5",
+    "webpack-dev-server": "^3.10.1"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.7.4",
+    "babel-preset-stage-1": "^6.24.1",
+    "nodemon": "^2.0.2",
+    "webpack-cli": "^3.3.10"
+  }
+}
