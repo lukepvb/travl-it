@@ -8,7 +8,6 @@ const Form = (props) => {
   return (
   <div>
   <form onSubmit ={props.onSubmit}>
-    
     <label>
     Description:
     <textarea id = "description" value={props.descriptionInfo} name="descriptionInfo" rows= "10" onChange = {props.onChange}></textarea>    
