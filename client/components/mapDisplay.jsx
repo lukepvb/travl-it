@@ -8,25 +8,43 @@ import {
     Marker,
     InfoWindow
   } from "react-google-maps";
-function Map() {
-    return (
-        <GoogleMap
-        defaultZoom={4}
-        defaultCenter={{lat: 39.82, lng: -98.57}}
-        />
 
-    )
-}
-
-const MapWrapped = withScriptjs(withGoogleMap(Map));
 
 
 // const AnyReactComponent = ({ text }) => <div>{text}</div>;
-class SimpleMap extends Component {
+class MapDisplay extends Component {
   constructor(props) {
       super(props);
   }
   render() {
+    let currentMarkerList = this.props.markerList
+    function Map() {
+      return (
+          <GoogleMap
+          defaultZoom={4}
+          defaultCenter={{lat: 39.82, lng: -98.57}}
+          >
+            {currentMarkerList.map((marker, i) => (
+              <Marker 
+                key={i}
+                position={{ lat: marker.location.lat, lng: marker.location.lng}}
+              />
+            
+  
+  
+  
+            ))
+              }
+          
+  
+  
+          </GoogleMap>
+          
+  
+      )
+  }
+  
+  const MapWrapped = withScriptjs(withGoogleMap(Map));
       return (
         <div>
           <div>
@@ -44,4 +62,4 @@ class SimpleMap extends Component {
       )
   }
 }
-export default SimpleMap;
+export default MapDisplay;
