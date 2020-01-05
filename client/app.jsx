@@ -25,17 +25,14 @@ export default class App extends Component {
             searchMarkerTag: '',
             savedMarkerTag: '',
             whiteListUserInfo: '',
-
+            clickedMarker: ''
     }
     this.onChange = this.onChange.bind(this);
-
-            clickedMarker: '',
-
-
-    }
     this.clickMap = this.clickMap.bind(this);
     this.clickMarker = this.clickMarker.bind(this);
     }
+    
+    
     clickMarker(e) {
         // console.log(e)
         console.log( "Latitude: "+e.latLng.lat()+" "+", longitude: "+e.latLng.lng())
@@ -73,12 +70,8 @@ export default class App extends Component {
         return (
             <div id="map">This is the app.jsx div
             <ImageDisplay/>
-
-            <MapDisplay markerList={this.state.markerList}/>
-            <MarkerForm tagInfo = {this.state.tagInfo} onChange ={this.onChange} />
-
             <MapDisplay clickedMarker={this.state.clickedMarker} clickMarker={this.clickMarker} clickMap={this.clickMap} markerList={this.state.markerList}/>
-            <MarkerForm/>
+            <MarkerForm tagInfo = {this.state.tagInfo} onChange ={this.onChange} />
 
             </div>
             
