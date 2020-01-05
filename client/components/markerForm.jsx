@@ -1,28 +1,27 @@
 import React, { Component } from 'react';
 
-function Form(props){
-
+const Form = (props) => {
+// //locationInfo: '',
+// tagInfo: '',
+// descriptionInfo: '',
+// imgURL:
   return (
   <div>
   <form onSubmit ={props.onSubmit}>
-    <label>
-    Location:
-    <input type = 'text'></input>
-    </label>
-    <br></br>
+    
     <label>
     Description:
-    <textarea id = "description" rows= "10"></textarea>    
+    <textarea id = "description" value={props.descriptionInfo} name="descriptionInfo" rows= "10" onChange = {props.onChange}></textarea>    
     </label>
     <br></br>
     <label>
     Tag:
-    <input type = 'text' value= {props.tagInfo} onChange = {props.onChange}></input>
+    <input type = 'text' value= {props.tagInfo} name="tagInfo" onChange = {props.onChange}></input>
     </label>
     <br></br>
     <label>
     Image URL:
-    <input type = 'text'></input>
+    <input type = 'text' value={props.imgURL} name="imgURL" onChange = {props.onChange}></input>
     </label>
     <button type= 'submit'>Submit</button>
   </form>

@@ -17,7 +17,7 @@ export default class App extends Component {
         this.state = {
             imgList: [],
             userWhiteList: [],
-            markerList: [{tag: 'food', location: {lat: 45, lng: 45}, description: 'this tag is a test of tags'}],
+            markerList: [{tag: 'food', location: {lat: 45, lng: 45}, description: 'this tag is a test of tags', imgURL: 'this is a URL '}],
             locationInfo: '',
             tagInfo: '',
             descriptionInfo: '',
@@ -36,21 +36,21 @@ export default class App extends Component {
     
     clickMarker(e) {
         // console.log(e)
-        console.log( "Latitude: "+e.latLng.lat()+" "+", longitude: "+e.latLng.lng())
+        // console.log( "Latitude: "+e.latLng.lat()+" "+", longitude: "+e.latLng.lng())
         let clickedMarker = [...this.state.markerList];
         clickedMarker = clickedMarker.filter((marker) => {
             return (marker.location.lat == e.latLng.lat() && marker.location.lng == e.latLng.lng())
         })
         this.setState({clickedMarker: clickedMarker[0]})
-        console.log('current saved marker' , this.state.clickedMarker)
+        // console.log('current saved marker' , this.state.clickedMarker)
     }
     clickMap(e) {
         
-        console.log( "Latitude: "+e.latLng.lat()+" "+", longitude: "+e.latLng.lng())
+        // console.log( "Latitude: "+e.latLng.lat()+" "+", longitude: "+e.latLng.lng())
         let newMarker = {tag:'test', location: {lat: e.latLng.lat(), lng:e.latLng.lng()}, description: 'this is testing adding marker'}
         let newMarkerList = [...this.state.markerList]
         newMarkerList.push(newMarker);
-        console.log(newMarkerList)
+        // console.log(newMarkerList)
         this.setState({markerList: newMarkerList})
 
         ///works but in reality we should be doing fetch/post here instead of changing state
@@ -59,28 +59,31 @@ export default class App extends Component {
     onChange(e) {
       //takes typed information and sets relevant state
       // console.log(e.target.value);
-      this.setState({tagInfo: e.target.value},()=>{
-        console.log('after setState', this.state.tagInfo);
+      this.setState({[e.target.name]: e.target.value},()=>{
+          
+        // console.log('after setState onChange', this.state.markerList);
       })
     }
     onSubmit(e) {
         //does stuff on forms submits
         //take the stored information and update the state   
         e.preventDefault();     
-        const modifiedMarker = Object.assign(this.state.clickedMarker, {tag: this.state.tagInfo});
+        console.log('before modified marker' ,this.state.descriptionInfo)
+        const modifiedMarker = Object.assign(this.state.clickedMarker, {tag: this.state.tagInfo, description: this.state.descriptionInfo , imgURL: this.state.imgURL});
+        console.log('in submit showing modMarker' , modifiedMarker, modifiedMarker.description)
         let newMarkerList = [...this.state.markerList];
         newMarkerList = newMarkerList.filter((marker) => {
           return (marker.location.lat !== this.state.clickedMarker.location.lat || marker.location.lng !== this.state.clickedMarker.location.lng)
         })
         newMarkerList.push(modifiedMarker);
-        this.setState({tagInfo: '', clickedMarker: '', markerList: newMarkerList}, ()=>{
+        this.setState({tagInfo: '', descriptionInfo: '', imgURL: '', clickedMarker: '', markerList: newMarkerList}, ()=>{
           console.log(`after setState for onsubmit`,this.state);
         });
     }
     render() {
       let markerForm;
       if(this.state.clickedMarker){
-        markerForm = <MarkerForm tagInfo = {this.state.tagInfo} onChange ={this.onChange} onSubmit={this.onSubmit}/>
+        markerForm = <MarkerForm imgURL={this.state.imgURL} tagInfo = {this.state.tagInfo} locationInfo={this.state.locationInfo} descriptionInfo={this.state.descriptionInfo} onChange ={this.onChange} onSubmit={this.onSubmit}/>
       }
         return (
             <div id="map">This is the app.jsx div
