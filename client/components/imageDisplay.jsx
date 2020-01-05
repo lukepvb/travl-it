@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
 
-function Image(){
+function Image({clickedMarker}){
+  let images = [];
+  if (clickedMarker.imgURL) {
+    for (let i = 0; i < clickedMarker.imgURL.length; i += 1) {
+    let img = clickedMarker.imgURL[i];
+    images.push(<img src={img} />)
+  }
+  }
+  
   return(
-    <h1>This is the image display Component</h1>
+    <div>
+        
+
+        {images}
+
+    </div>
   )
 }
 

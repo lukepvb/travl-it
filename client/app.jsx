@@ -69,8 +69,23 @@ export default class App extends Component {
         //take the stored information and update the state   
         e.preventDefault();     
         const clicked = this.state.clickedMarker;
+        let imgProps = '';
+        let imgListVar = this.state.imgURL;
+        console.log(this.state.imgURL)
+        imgListVar = imgListVar.split('-');
+        console.log('imglistvariable' , imgListVar)
+        if (imgListVar[0]) {
+            imgProps = imgListVar
+
+            if (clicked.imgURL) {
+            imgProps = imgListVar.concat(clicked.imgURL)
+            }
+        }
+        
+
+        
         console.log('before modified marker' ,this.state.descriptionInfo)
-        const modifiedMarker = Object.assign(clicked, {tag: this.state.tagInfo || clicked.tag, description: this.state.descriptionInfo || clicked.description, imgURL: this.state.imgURL || clicked.imgURL});
+        const modifiedMarker = Object.assign(clicked, {tag: this.state.tagInfo || clicked.tag, description: this.state.descriptionInfo || clicked.description, imgURL: imgProps || clicked.imgURL});
         console.log('in submit showing modMarker' , modifiedMarker, modifiedMarker.description)
         let newMarkerList = [...this.state.markerList];
         newMarkerList = newMarkerList.filter((marker) => {
@@ -83,16 +98,21 @@ export default class App extends Component {
     }
     render() {
       let markerForm;
+      let markerInfoBox; 
+      let imageDisplay;
       if(this.state.clickedMarker){
         markerForm = <MarkerForm imgURL={this.state.imgURL} tagInfo = {this.state.tagInfo} locationInfo={this.state.locationInfo} descriptionInfo={this.state.descriptionInfo} onChange ={this.onChange} onSubmit={this.onSubmit}/>
       }
-      let markerInfoBox; 
+      
       if(this.state.clickedMarker.tag || this.state.clickedMarker.description){
         markerInfoBox = <MarkerInfoBox clickedMarker ={this.state.clickedMarker}/>
       }
+      if (this.state.clickedMarker ) {
+          imageDisplay = <ImageDisplay clickedMarker={this.state.clickedMarker}/>
+      }
         return (
             <div id="map">This is the app.jsx div
-              <ImageDisplay/>
+              {imageDisplay}
             <div>
               <MapDisplay clickedMarker={this.state.clickedMarker} clickMarker={this.clickMarker} clickMap={this.clickMap} markerList={this.state.markerList}/>
               {markerInfoBox}
