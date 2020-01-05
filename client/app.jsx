@@ -17,7 +17,7 @@ export default class App extends Component {
         this.state = {
             imgList: [],
             userWhiteList: [],
-            markerList: [],
+            markerList: [{tag: 'food', location: {lat: 45, lng: 45}, description: 'this tag is a test of tags'}],
             locationInfo: '',
             tagInfo: '',
             descriptionInfo: '',
@@ -39,7 +39,7 @@ export default class App extends Component {
         return (
             <div id="map">This is the app.jsx div
             <ImageDisplay/>
-            <MapDisplay/>
+            <MapDisplay markerList={this.state.markerList}/>
             <MarkerForm/>
             </div>
             
