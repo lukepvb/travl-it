@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 import MapDisplay from './components/mapDisplay.jsx';
 import MarkerForm from './components/markerForm.jsx';
 import ImageDisplay from './components/imageDisplay.jsx';
-
+import MarkerInfoBox from './components/markerInfoBox.jsx';
 
 //this one renders ya know the app.
 
@@ -47,7 +47,7 @@ export default class App extends Component {
     clickMap(e) {
         
         // console.log( "Latitude: "+e.latLng.lat()+" "+", longitude: "+e.latLng.lng())
-        let newMarker = {tag:'test', location: {lat: e.latLng.lat(), lng:e.latLng.lng()}, description: 'this is testing adding marker'}
+        let newMarker = {tag:'', location: {lat: e.latLng.lat(), lng:e.latLng.lng()}, description: ''}
         let newMarkerList = [...this.state.markerList]
         newMarkerList.push(newMarker);
         // console.log(newMarkerList)
@@ -68,8 +68,9 @@ export default class App extends Component {
         //does stuff on forms submits
         //take the stored information and update the state   
         e.preventDefault();     
+        const clicked = this.state.clickedMarker;
         console.log('before modified marker' ,this.state.descriptionInfo)
-        const modifiedMarker = Object.assign(this.state.clickedMarker, {tag: this.state.tagInfo, description: this.state.descriptionInfo , imgURL: this.state.imgURL});
+        const modifiedMarker = Object.assign(clicked, {tag: this.state.tagInfo || clicked.tag, description: this.state.descriptionInfo || clicked.description, imgURL: this.state.imgURL || clicked.imgURL});
         console.log('in submit showing modMarker' , modifiedMarker, modifiedMarker.description)
         let newMarkerList = [...this.state.markerList];
         newMarkerList = newMarkerList.filter((marker) => {
@@ -85,14 +86,19 @@ export default class App extends Component {
       if(this.state.clickedMarker){
         markerForm = <MarkerForm imgURL={this.state.imgURL} tagInfo = {this.state.tagInfo} locationInfo={this.state.locationInfo} descriptionInfo={this.state.descriptionInfo} onChange ={this.onChange} onSubmit={this.onSubmit}/>
       }
+      let markerInfoBox; 
+      if(this.state.clickedMarker.tag || this.state.clickedMarker.description){
+        markerInfoBox = <MarkerInfoBox clickedMarker ={this.state.clickedMarker}/>
+      }
         return (
             <div id="map">This is the app.jsx div
-            <ImageDisplay/>
-            <MapDisplay clickedMarker={this.state.clickedMarker} clickMarker={this.clickMarker} clickMap={this.clickMap} markerList={this.state.markerList}/>
+              <ImageDisplay/>
+            <div>
+              <MapDisplay clickedMarker={this.state.clickedMarker} clickMarker={this.clickMarker} clickMap={this.clickMap} markerList={this.state.markerList}/>
+              {markerInfoBox}
+            </div>
             {markerForm}
             </div>
-            
-
         )
     }
 }
