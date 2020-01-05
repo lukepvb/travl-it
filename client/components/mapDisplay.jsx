@@ -17,15 +17,19 @@ class MapDisplay extends Component {
       super(props);
   }
   render() {
-    let currentMarkerList = this.props.markerList
+    let currentMarkerList = this.props.markerList;
+    let clickMap = this.props.clickMap;
+    let clickMarker = this.props.clickMarker;
     function Map() {
       return (
           <GoogleMap
+          onClick={clickMap}
           defaultZoom={4}
           defaultCenter={{lat: 39.82, lng: -98.57}}
           >
             {currentMarkerList.map((marker, i) => (
               <Marker 
+                onClick={clickMarker}
                 key={i}
                 position={{ lat: marker.location.lat, lng: marker.location.lng}}
               />

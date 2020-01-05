@@ -25,8 +25,38 @@ export default class App extends Component {
             searchMarkerTag: '',
             savedMarkerTag: '',
             whiteListUserInfo: '',
+
     }
     this.onChange = this.onChange.bind(this);
+
+            clickedMarker: '',
+
+
+    }
+    this.clickMap = this.clickMap.bind(this);
+    this.clickMarker = this.clickMarker.bind(this);
+    }
+    clickMarker(e) {
+        // console.log(e)
+        console.log( "Latitude: "+e.latLng.lat()+" "+", longitude: "+e.latLng.lng())
+        let clickedMarker = [...this.state.markerList];
+        clickedMarker = clickedMarker.filter((marker) => {
+            return (marker.location.lat == e.latLng.lat() && marker.location.lng == e.latLng.lng())
+        })
+        this.setState({clickedMarker: clickedMarker})
+        console.log('current saved marker' , this.state.clickedMarker)
+    }
+    clickMap(e) {
+        
+        console.log( "Latitude: "+e.latLng.lat()+" "+", longitude: "+e.latLng.lng())
+        let newMarker = {tag:'test', location: {lat: e.latLng.lat(), lng:e.latLng.lng()}, description: 'this is testing adding marker'}
+        let newMarkerList = [...this.state.markerList]
+        newMarkerList.push(newMarker);
+        console.log(newMarkerList)
+        this.setState({markerList: newMarkerList})
+
+        ///works but in reality we should be doing fetch/post here instead of changing state
+
     }
     onChange(e) {
       //takes typed information and sets relevant state
@@ -43,8 +73,13 @@ export default class App extends Component {
         return (
             <div id="map">This is the app.jsx div
             <ImageDisplay/>
+
             <MapDisplay markerList={this.state.markerList}/>
             <MarkerForm tagInfo = {this.state.tagInfo} onChange ={this.onChange} />
+
+            <MapDisplay clickedMarker={this.state.clickedMarker} clickMarker={this.clickMarker} clickMap={this.clickMap} markerList={this.state.markerList}/>
+            <MarkerForm/>
+
             </div>
             
 
