@@ -29,10 +29,6 @@ class MapDisplay extends Component {
                 key={i}
                 position={{ lat: marker.location.lat, lng: marker.location.lng}}
               />
-            
-  
-  
-  
             ))
               }
           

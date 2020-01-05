@@ -25,22 +25,26 @@ export default class App extends Component {
             searchMarkerTag: '',
             savedMarkerTag: '',
             whiteListUserInfo: '',
-
-
     }
+    this.onChange = this.onChange.bind(this);
     }
-    onChange() {
-        //takes typed information and sets relevant state
+    onChange(e) {
+      //takes typed information and sets relevant state
+      // console.log(e.target.value);
+      this.setState({tagInfo: e.target.value},()=>{
+        console.log('after setState', this.state.tagInfo);
+      })
     }
     onSubmit() {
         //does stuff on forms submits
+        //take the stored information and update the state
     }
     render() {
         return (
             <div id="map">This is the app.jsx div
             <ImageDisplay/>
             <MapDisplay markerList={this.state.markerList}/>
-            <MarkerForm/>
+            <MarkerForm tagInfo = {this.state.tagInfo} onChange ={this.onChange} />
             </div>
             
 
