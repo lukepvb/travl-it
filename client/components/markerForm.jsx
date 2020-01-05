@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-function Form(){
+function Form(props){
   return (
   <div>
   <form>
@@ -16,7 +16,7 @@ function Form(){
     <br></br>
     <label>
     Tag:
-    <input type = 'text'></input>
+    <input type = 'text' value= {props.tagInfo} onChange = {props.onChange}></input>
     </label>
     <br></br>
     <label>
