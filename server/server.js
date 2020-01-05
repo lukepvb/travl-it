@@ -16,15 +16,26 @@ const userController = require('./controllers/controller');
 
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, '../index.html'));
+// route to get all markers and main page
+app.get('/', userController.getMarkers, (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, './index.html'));
 })
 
+// route to create a marker on first click
+app.post('/createMarker', userController.createMarker, (req, res) => {
+  res.status(200).json({ marker: res.locals.createdMarker});
+})
+
+// route to update marker on form submit
+app.patch('/updateMarker', userController.updateMarker, userController.createMarker, (req, res) => {
+  res.status(200).json({ updatedMarker: res.locals.createdMarker });
+})
 
 //this is a test to see if the query to the DB works - had to use another route because of the original '/' get request that serves the index.html
 app.get('/getusers', userController.getUser, (req, res) => {
   res.status(200).send('this works man!');
 })
+
 
 app.use('*', (req,res) => {
     res.status(404).send('Not Found');

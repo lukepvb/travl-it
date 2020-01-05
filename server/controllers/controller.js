@@ -11,13 +11,79 @@ controller.getUser = (req, res, next) => {
     `SELECT * FROM users;`;
     db.query(userQuery)
         .then(data => {
-            res.locals.users = data;
-            console.log(data);
+            res.locals.users = data.rows;
+            console.log(res.locals.users);
             return next();
         })
         .catch(err => {
             return next(err);
         })
 }
+
+
+// middleware to get all markers
+controller.getMarkers = (req, res, next) => {
+    const markersQuery =
+    `SELECT users.id, users.username, location.longitude, location.latitude
+    FROM users
+    LEFT OUTER JOIN location
+    ON location.users_id = users.id;`;
+    db.query(markersQuery)
+        .then(markersList => {
+            res.locals.markersList = markersList.rows;
+            console.log('res locals markerslist', res.locals.markersList)
+            return next();
+        })
+        .catch(err => {
+            return next(err);
+        })
+}
+
+// route to get single marker data
+controller.createMarker = (req, res, next) => {
+    // ---------- need to test req.body from front end post request to ensure keys are consistent ------
+    const { longitude, latitude } = req.body;
+    const createMarkerQuery = 
+    `SELECT * FROM location
+    JOIN images 
+    ON location.location_id = images.location_id
+    WHERE location.longitude = '${longitude}' AND location.latitude = '${latitude}';`;
+    db.query(createMarkerQuery) 
+        .then(createdMarker => {
+            res.locals.createdMarker = createdMarker.rows;
+            console.log(res.locals.createdMarker);
+            return next();
+        })
+        .catch(err => {
+            return next(err);
+        })
+}
+
+// create marker route (on form submit)
+controller.updateMarker = (req, res, next) => {
+    // ---------- need to test req.body from front end post request to ensure keys are consistent ------
+    const { latitude, longitude, description, tag, location, urls } = req.body;
+    const updateMarkerQuery =
+    `BEGIN TRANSACTION;
+    UPDATE location
+    SET description = '${description}', tag = '${tag}', location = '${location}'
+    WHERE latitude = '${latitude}' AND longitude = '${longitude}';
+    UPDATE images
+    SET urls = '${urls}'
+    FROM location
+    WHERE images.location_id = location.location_id;
+    COMMIT;`
+    db.query(updateMarkerQuery)
+        .then(updatedMarker => {
+            res.locals.updatedMarker = updatedMarker;
+            console.log('res.locals.updatedMarker:', res.locals.updatedMarker);
+            return next();
+        })
+        .catch(err => {
+            return next(err);
+        })
+}
+
+
 
 module.exports = controller;
