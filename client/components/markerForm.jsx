@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 
 function Form(props){
+
   return (
   <div>
-  <form>
+  <form onSubmit ={props.onSubmit}>
     <label>
     Location:
     <input type = 'text'></input>
@@ -23,6 +24,7 @@ function Form(props){
     Image URL:
     <input type = 'text'></input>
     </label>
+    <button type= 'submit'>Submit</button>
   </form>
   </div>
   )

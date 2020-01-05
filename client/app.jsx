@@ -30,6 +30,7 @@ export default class App extends Component {
     this.onChange = this.onChange.bind(this);
     this.clickMap = this.clickMap.bind(this);
     this.clickMarker = this.clickMarker.bind(this);
+    this.onSubmit= this.onSubmit.bind(this);
     }
     
     
@@ -40,7 +41,7 @@ export default class App extends Component {
         clickedMarker = clickedMarker.filter((marker) => {
             return (marker.location.lat == e.latLng.lat() && marker.location.lng == e.latLng.lng())
         })
-        this.setState({clickedMarker: clickedMarker})
+        this.setState({clickedMarker: clickedMarker[0]})
         console.log('current saved marker' , this.state.clickedMarker)
     }
     clickMap(e) {
@@ -62,17 +63,30 @@ export default class App extends Component {
         console.log('after setState', this.state.tagInfo);
       })
     }
-    onSubmit() {
+    onSubmit(e) {
         //does stuff on forms submits
-        //take the stored information and update the state
+        //take the stored information and update the state   
+        e.preventDefault();     
+        const modifiedMarker = Object.assign(this.state.clickedMarker, {tag: this.state.tagInfo});
+        let newMarkerList = [...this.state.markerList];
+        newMarkerList = newMarkerList.filter((marker) => {
+          return (marker.location.lat !== this.state.clickedMarker.location.lat || marker.location.lng !== this.state.clickedMarker.location.lng)
+        })
+        newMarkerList.push(modifiedMarker);
+        this.setState({tagInfo: '', clickedMarker: '', markerList: newMarkerList}, ()=>{
+          console.log(`after setState for onsubmit`,this.state);
+        });
     }
     render() {
+      let markerForm;
+      if(this.state.clickedMarker){
+        markerForm = <MarkerForm tagInfo = {this.state.tagInfo} onChange ={this.onChange} onSubmit={this.onSubmit}/>
+      }
         return (
             <div id="map">This is the app.jsx div
             <ImageDisplay/>
             <MapDisplay clickedMarker={this.state.clickedMarker} clickMarker={this.clickMarker} clickMap={this.clickMap} markerList={this.state.markerList}/>
-            <MarkerForm tagInfo = {this.state.tagInfo} onChange ={this.onChange} />
-
+            {markerForm}
             </div>
             
 
