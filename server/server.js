@@ -26,7 +26,7 @@ app.post('/createMarker', userController.createMarker, (req, res) => {
   res.status(200).json({ marker: res.locals.createdMarker});
 })
 
-// route to update marker on form submit
+// route to update marker when you submit form
 app.patch('/updateMarker', userController.updateMarker, userController.createMarker, (req, res) => {
   res.status(200).json({ updatedMarker: res.locals.createdMarker });
 })

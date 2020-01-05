@@ -61,7 +61,7 @@ controller.createMarker = (req, res, next) => {
 
 // create marker route (on form submit)
 controller.updateMarker = (req, res, next) => {
-    // ---------- need to test req.body from front end post request to ensure keys are consistent ------
+    // --------- need to test req.body from front end post request to ensure keys are consistent ------
     const { latitude, longitude, description, tag, location, urls } = req.body;
     const updateMarkerQuery =
     `BEGIN TRANSACTION;
