@@ -53,6 +53,22 @@ export default class App extends Component {
         newMarkerList.push(newMarker);
         // console.log(newMarkerList)
         this.setState({markerList: newMarkerList})
+        fetch('/addMarker', {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            body: JSON.stringify({...newMarker, longitude: newMarker.location.lng, latitude: newMarker.location.lat}), // body data type must match "Content-Type" header
+            //mode: 'cors', // no-cors, *cors, same-origins
+            //cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            //credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+              'Content-Type': 'application/json'
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            //redirect: 'follow', // manual, *follow, error
+            //referrerPolicy: 'no-referrer', // no-referrer, *client
+            
+          })
+          .then((res)=> {
+              console.log('inside post then', res)})
 
         ///works but in reality we should be doing fetch/post here instead of changing state
 
@@ -100,6 +116,22 @@ export default class App extends Component {
         this.setState({tagInfo: '', descriptionInfo: '', imgURL: '', clickedMarker: '', markerList: newMarkerList}, ()=>{
           console.log(`after setState for onsubmit`,this.state);
         });
+        fetch('/updateMarker', {
+            method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
+            body: JSON.stringify({...modifiedMarker}), // body data type must match "Content-Type" header
+            //mode: 'cors', // no-cors, *cors, same-origin
+            //cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            //credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+              'Content-Type': 'application/json'
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            //redirect: 'follow', // manual, *follow, error
+            //referrerPolicy: 'no-referrer', // no-referrer, *client
+            
+          })
+          .then((res)=> {
+              console.log('inside patch then', res)})
     }
     render() {
       let markerForm;
