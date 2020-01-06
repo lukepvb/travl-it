@@ -1,6 +1,8 @@
 //need to rename this file, set better middleware names and make actual queries that use logic to change the query information into tangible data for our frontend to use to change the state
 
 const db = require('../models/dbModel');
+const cloudinary = require('cloudinary')
+const formData = require('express-form-data')
 
 const controller = {};
 
@@ -19,15 +21,63 @@ controller.getUser = (req, res, next) => {
             return next(err);
         })
 }
+cloudinary.config({ 
+    cloud_name: 'travelappcloud', 
+    api_key: "636342232981834", 
+    api_secret: "fR0HuLM1BXdVwwwcIOsNmCzQbPs"
+  }) 
+controller.addImage = (req, res, next) => {
+    console.log('in add image YO')
+    const values = Object.values(req.files)
+    console.log(values)
+    const promises = values.map(image => cloudinary.uploader.upload(image.path))
+    console.log('did promises', promises)
+    Promise
+      .all(promises)
+      .then(results => {
+          
+          console.log('results url' , results[0].url)
+          res.locals.newImgURL = results[0].url 
+          return next();
+      })
+      
+      .catch(err => {
+        console.log(err);
+        })
+      
+      
+  
+}
+controller.getImage = (req, res, next) => {
+    // https://res.cloudinary.com/travelappcloud/image/fetch/
+}
 
 
 // middleware to get all markers
+// controller.getMarkersAndLocation = (req, res, next) => {
+//     const markersQuery =
+//     // `SELECT users.id, users.username, location.longitude, location.latitude, location.description, location.tag, location.imgURLS
+//     `SELECT users.id, users.username, location.longitude, location.latitude, location.description, location.tag, images.urls
+//     FROM users
+//     JOIN location ON location.users_id = users.id
+//     JOIN images
+//     ON location.location_id = images.location_id;`;
+//     db.query(markersQuery)
+//         .then(markersList => {
+//             res.locals.markersLocationList = markersList.rows;
+//             console.log('res locals markerslist', res.locals.markersLocationList)
+//             return next();
+//         })
+//         .catch(err => {
+//             return next(err);
+//         })
+// }
 controller.getMarkers = (req, res, next) => {
     const markersQuery =
-    `SELECT users.id, users.username, location.longitude, location.latitude, location.description, location.tag
+    // `SELECT users.id, users.username, location.longitude, location.latitude, location.description, location.tag, location.imgURLS
+    `SELECT users.id, users.username, location.longitude, location.latitude, location.description, location.tag, location.urls
     FROM users
-    LEFT OUTER JOIN location
-    ON location.users_id = users.id;`;
+    JOIN location ON location.users_id = users.id;`;
     db.query(markersQuery)
         .then(markersList => {
             res.locals.markersList = markersList.rows;
@@ -39,9 +89,10 @@ controller.getMarkers = (req, res, next) => {
         })
 }
 
+
 // route to add one marker
 controller.addMarker = (req, res, next) => {
-    console.log('addmarker req.body:', req.body)
+    //console.log('addmarker req.body:', req.body)
     const { longitude, latitude } = req.body;
     const addMarkerQuery = 
     `INSERT INTO location (longitude, latitude, users_id)
@@ -85,17 +136,13 @@ controller.updateMarker = (req, res, next) => {
     const updateMarkerQuery =
     `BEGIN TRANSACTION;
     UPDATE location
-    SET description = '${description}', tag = '${tag}', location = '${location}'
+    SET description = '${description}', tag = '${tag}', location = '${location}', urls='${imgURL}'
     WHERE latitude = '${latitude}' AND longitude = '${longitude}';
-    UPDATE images
-    SET urls = '${imgURL}'
-    FROM location
-    WHERE images.location_id = location.location_id;
     COMMIT;`
     db.query(updateMarkerQuery)
         .then(updatedMarker => {
             res.locals.updatedMarker = updatedMarker;
-           // console.log('res.locals.updatedMarker:', res.locals.updatedMarker);
+            console.log('res.locals.updatedMarker:', res.locals.updatedMarker);
             return next();
         })
         .catch(err => {

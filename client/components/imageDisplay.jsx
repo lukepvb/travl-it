@@ -5,7 +5,8 @@ function Image({clickedMarker}){
   if (clickedMarker.imgURL) {
     for (let i = 0; i < clickedMarker.imgURL.length; i += 1) {
     let img = clickedMarker.imgURL[i];
-    images.push(<img src={img} />)
+    console.log(img)
+    images.push(<img src={img} key={i}/>)
   }
   }
   
