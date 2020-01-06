@@ -39,19 +39,35 @@ controller.getMarkers = (req, res, next) => {
         })
 }
 
+// route to add one marker
+controller.addMarker = (req, res, next) => {
+    const { longitude, latitude } = req.body;
+    const addMarkerQuery = 
+    `INSERT INTO location (longitude, latitude, users_id)
+    VALUES ('${longitude}', '${latitude}', 1);`
+    db.query(addMarkerQuery)
+        .then(newMarker => {
+            return next();
+        })
+        .catch(err => {
+            return next(err);
+        })
+}
+
 // route to get single marker data
-controller.createMarker = (req, res, next) => {
+controller.getOneMarker = (req, res, next) => {
     // ---------- need to test req.body from front end post request to ensure keys are consistent ------
     const { longitude, latitude } = req.body;
-    const createMarkerQuery = 
+
+    const getOneMarkerQuery = 
     `SELECT * FROM location
     JOIN images 
     ON location.location_id = images.location_id
     WHERE location.longitude = '${longitude}' AND location.latitude = '${latitude}';`;
-    db.query(createMarkerQuery) 
-        .then(createdMarker => {
-            res.locals.createdMarker = createdMarker.rows;
-            console.log(res.locals.createdMarker);
+    db.query(getOneMarkerQuery) 
+        .then(oneMarker => {
+            res.locals.oneMarker = oneMarker.rows;
+            console.log(res.locals.oneMarker);
             return next();
         })
         .catch(err => {

@@ -21,14 +21,15 @@ app.get('/', userController.getMarkers, (req, res) => {
   res.status(200).sendFile(path.join(__dirname, './index.html'));
 })
 
+
 // route to create a marker on first click
-app.post('/createMarker', userController.createMarker, (req, res) => {
-  res.status(200).json({ marker: res.locals.createdMarker});
+app.post('/addMarker', userController.addMarker, (req, res) => {
+  res.status(200).send("Marker created!");
 })
 
 // route to update marker when you submit form
-app.patch('/updateMarker', userController.updateMarker, userController.createMarker, (req, res) => {
-  res.status(200).json({ updatedMarker: res.locals.createdMarker });
+app.patch('/updateMarker', userController.updateMarker, userController.getOneMarker, (req, res) => {
+  res.status(200).json({ updatedMarker: res.locals.oneMarker });
 })
 
 //this is a test to see if the query to the DB works - had to use another route because of the original '/' get request that serves the index.html
