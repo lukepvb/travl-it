@@ -20,6 +20,11 @@ class MapDisplay extends Component {
     let currentMarkerList = this.props.markerList;
     let clickMap = this.props.clickMap;
     let clickMarker = this.props.clickMarker;
+    if(this.props.savedTag){
+      currentMarkerList = currentMarkerList.filter((marker)=>{
+        return marker.tag === this.props.savedTag;
+      })
+    }
     function Map() {
       return (
           <GoogleMap
@@ -48,7 +53,8 @@ class MapDisplay extends Component {
       return (
         <div>
           <div>
-            <input type = "text" placeholder="Filter marker by tag"/>
+            <input type = "text" name = "searchTag" placeholder="Filter marker by tag" onChange = {this.props.onChange} value={this.props.searchTag}/>
+            <button onClick = {this.props.buttonSubmit}>submit</button>
           </div>
           <div style={{ width: '70vw' , height: '70vh'}}>
               <MapWrapped 
