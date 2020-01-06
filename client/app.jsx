@@ -63,7 +63,7 @@ export default class App extends Component {
               'Content-Type': 'application/json'
               // 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            //redirect: 'follow', // manual, *follow, error
+            //redirect: 'follow', // manual, *follow, error q q
             //referrerPolicy: 'no-referrer', // no-referrer, *client
             
           })
@@ -135,6 +135,32 @@ export default class App extends Component {
           .then((res)=> {
               console.log('inside patch then', res)})
     }
+    componentDidMount() {
+        fetch('/api')
+          .then(res => res.json())
+          .then((markers) => {
+            //console.log('inside this.componentDidMount res:', markers)
+            let newMarkerList;
+            markers = markers.markersList;
+             
+                newMarkerList = [...this.state.markerList]
+                for (let i = 0; i < markers.length; i += 1) {
+                    let currMarker = markers[i];
+                    currMarker.location = {lat: parseInt(currMarker.latitude), lng: parseInt(currMarker.longitude)}
+                    console.log('current Marker is ' , currMarker)
+                    newMarkerList.push(currMarker)
+                }
+                //console.log(newUserList)
+            
+            // console.log(this.state.markerList)
+            // console.log(newMarkerList)
+
+            return this.setState({
+              markerList: newMarkerList,
+            });
+          })
+          .catch(err => console.log('users.componentDidMount: get users: ERROR: ', err));
+      }
     render() {
       let markerForm;
       let markerInfoBox; 

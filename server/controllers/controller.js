@@ -24,7 +24,7 @@ controller.getUser = (req, res, next) => {
 // middleware to get all markers
 controller.getMarkers = (req, res, next) => {
     const markersQuery =
-    `SELECT users.id, users.username, location.longitude, location.latitude
+    `SELECT users.id, users.username, location.longitude, location.latitude, location.description, location.tag
     FROM users
     LEFT OUTER JOIN location
     ON location.users_id = users.id;`;
@@ -80,15 +80,15 @@ controller.getOneMarker = (req, res, next) => {
 // create marker route (on form submit)
 controller.updateMarker = (req, res, next) => {
     // --------- need to test req.body from front end post request to ensure keys are consistent ------
-    const { latitude, longitude, description, tag, location, urls } = req.body;
-    console.log(latitude, longitude, description, tag, location, urls)
+    const { latitude, longitude, description, tag, location, imgURL } = req.body;
+    console.log(latitude, longitude, description, tag, location, imgURL)
     const updateMarkerQuery =
     `BEGIN TRANSACTION;
     UPDATE location
     SET description = '${description}', tag = '${tag}', location = '${location}'
     WHERE latitude = '${latitude}' AND longitude = '${longitude}';
     UPDATE images
-    SET urls = '${urls}'
+    SET urls = '${imgURL}'
     FROM location
     WHERE images.location_id = location.location_id;
     COMMIT;`
