@@ -12,7 +12,7 @@ controller.getUser = (req, res, next) => {
     db.query(userQuery)
         .then(data => {
             res.locals.users = data.rows;
-            console.log(res.locals.users);
+            //console.log(res.locals.users);
             return next();
         })
         .catch(err => {
@@ -31,7 +31,7 @@ controller.getMarkers = (req, res, next) => {
     db.query(markersQuery)
         .then(markersList => {
             res.locals.markersList = markersList.rows;
-            console.log('res locals markerslist', res.locals.markersList)
+            //console.log('res locals markerslist', res.locals.markersList)
             return next();
         })
         .catch(err => {
@@ -41,12 +41,14 @@ controller.getMarkers = (req, res, next) => {
 
 // route to add one marker
 controller.addMarker = (req, res, next) => {
+    console.log('addmarker req.body:', req.body)
     const { longitude, latitude } = req.body;
     const addMarkerQuery = 
     `INSERT INTO location (longitude, latitude, users_id)
     VALUES ('${longitude}', '${latitude}', 1);`
     db.query(addMarkerQuery)
         .then(newMarker => {
+            // console.log('added it', newMarker)
             return next();
         })
         .catch(err => {
@@ -67,7 +69,7 @@ controller.getOneMarker = (req, res, next) => {
     db.query(getOneMarkerQuery) 
         .then(oneMarker => {
             res.locals.oneMarker = oneMarker.rows;
-            console.log(res.locals.oneMarker);
+           // console.log(res.locals.oneMarker);
             return next();
         })
         .catch(err => {
@@ -79,6 +81,7 @@ controller.getOneMarker = (req, res, next) => {
 controller.updateMarker = (req, res, next) => {
     // --------- need to test req.body from front end post request to ensure keys are consistent ------
     const { latitude, longitude, description, tag, location, urls } = req.body;
+    console.log(latitude, longitude, description, tag, location, urls)
     const updateMarkerQuery =
     `BEGIN TRANSACTION;
     UPDATE location
@@ -92,7 +95,7 @@ controller.updateMarker = (req, res, next) => {
     db.query(updateMarkerQuery)
         .then(updatedMarker => {
             res.locals.updatedMarker = updatedMarker;
-            console.log('res.locals.updatedMarker:', res.locals.updatedMarker);
+           // console.log('res.locals.updatedMarker:', res.locals.updatedMarker);
             return next();
         })
         .catch(err => {

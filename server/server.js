@@ -18,9 +18,12 @@ app.use(bodyParser.json());
 
 // route to get all markers and main page
 app.get('/', userController.getMarkers, (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, './index.html'));
+  res.status(200).sendFile(path.join(__dirname , '../index.html'));
 })
-
+app.get('/build/bundle.js', (req, res) => {
+  console.log('inside / build-get') 
+  res.sendFile(path.resolve(__dirname, '../build/bundle.js'));
+});
 
 // route to create a marker on first click
 app.post('/addMarker', userController.addMarker, (req, res) => {
