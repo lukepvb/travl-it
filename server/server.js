@@ -17,9 +17,14 @@ const userController = require('./controllers/controller');
 app.use(bodyParser.json());
 
 // route to get all markers and main page
-app.get('/', userController.getMarkers, (req, res) => {
+app.get('/',  (req, res) => {
   res.status(200).sendFile(path.join(__dirname , '../index.html'));
 })
+
+app.get('/api', userController.getMarkers, (req, res) => {
+  res.status(200).json({markersList: res.locals.markersList})
+})
+
 app.get('/build/bundle.js', (req, res) => {
   console.log('inside / build-get') 
   res.sendFile(path.resolve(__dirname, '../build/bundle.js'));
