@@ -62,7 +62,15 @@ export default class App extends Component {
         let newURL = [res];
         let clicked = this.state.clickedMarker;
         let oldImgURL = clicked.imgURL;
-        newURL = newURL.concat(oldImgURL)
+        console.log('oldurl=',oldImgURL)
+            // if (oldImgURL) {
+            //     console.log('inside if oldimgurl' , oldImgURL)
+            //     oldImgURL.forEach(url => {
+            //         newURL.push(oldImgURL)
+            //     })
+            //     // newURL = newURL.push(oldImgURL)
+            // }
+        // newURL = newURL.concat(oldImgURL)
         let modifiedMarker = Object.assign(clicked, {imgURL: newURL});
 
         fetch('/updateMarker', {
@@ -84,7 +92,7 @@ export default class App extends Component {
       this.setState({ 
         images
       }, (images)=> {
-          console.log(images)
+        //   console.log(images)
       })
     })
     
@@ -109,7 +117,7 @@ export default class App extends Component {
         this.setState({markerList: newMarkerList})
         fetch('/addMarker', {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            body: JSON.stringify({...newMarker, longitude: newMarker.location.lng, latitude: newMarker.location.lat}), // body data type must match "Content-Type" header
+            body: JSON.stringify({...newMarker, longitude: newMarker.location.lng, latitude: newMarker.location.lat, savedTag: ''}), // body data type must match "Content-Type" header
             //mode: 'cors', // no-cors, *cors, same-origins
             //cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             //credentials: 'same-origin', // include, *same-origin, omit
