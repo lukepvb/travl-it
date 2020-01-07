@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 const Box = ({clickedMarker}) =>{
   return(
-    <div className = "testing">
+    <div className = "markerInfoBox">
       <p>
       tag: {clickedMarker.tag}
       </p>

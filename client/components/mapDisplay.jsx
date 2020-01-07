@@ -37,10 +37,11 @@ class MapDisplay extends Component {
                 onClick={clickMarker}
                 key={i}
                 position={{ lat: marker.location.lat, lng: marker.location.lng}}
-                icon = {{
-                  url: '/icon3.png', 
-                  scaledSize:new window.google.maps.Size(30,30)}
-              }
+              //   icon = {{
+              //     // url: '/icon3.png', 
+              //     scaledSize:new window.google.maps.Size(30,30)
+              //   }
+              // }
               />
             ))
               }
