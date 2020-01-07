@@ -6,7 +6,7 @@ const Form = (props) => {
 // descriptionInfo: '',
 // imgURL:
   return (
-  <div>
+  <div className = "form" >
   <form onSubmit ={props.onSubmit}>
     <label>
     Description:
@@ -22,6 +22,7 @@ const Form = (props) => {
     Image URL:
     <input type = 'file' id ='multi' value={props.imgURL} name="imgURL" onChange = {props.onPicChange} multiple></input>
     </label>
+    <br></br>
     <button type= 'submit'>Submit</button>
   </form>
   </div>

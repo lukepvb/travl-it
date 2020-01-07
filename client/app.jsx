@@ -8,9 +8,10 @@ import MapDisplay from './components/mapDisplay.jsx';
 import MarkerForm from './components/markerForm.jsx';
 import ImageDisplay from './components/imageDisplay.jsx';
 import MarkerInfoBox from './components/markerInfoBox.jsx';
+import style from './style.css'
+import {Animated} from 'react-animated-css';
 
 //this one renders ya know the app.
-
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -244,14 +245,26 @@ export default class App extends Component {
           imageDisplay = <ImageDisplay clickedMarker={this.state.clickedMarker}/>
       }
         return (
-            <div id="map">This is the app.jsx div
+          <div id="map">
+            <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
+              <h1 className="title">
+                Dear Travel Diary...
+              </h1>
+            </Animated>
+            <div className = "centerArea">
+              <div className = "mapDisplay">
+                <MapDisplay clickedMarker={this.state.clickedMarker} clickMarker={this.clickMarker} clickMap={this.clickMap} markerList={this.state.markerList} onChange ={this.onChange} searchTag = {this.state.searchTag} buttonSubmit ={this.buttonSubmit} savedTag = {this.state.savedTag}/> 
+              </div>
+              <div className = "infoBox">
+
+              <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}>
+                {markerInfoBox}
+              </Animated>
               {imageDisplay}
-            <div>
-              <MapDisplay clickedMarker={this.state.clickedMarker} clickMarker={this.clickMarker} clickMap={this.clickMap} markerList={this.state.markerList} onChange ={this.onChange} searchTag = {this.state.searchTag} buttonSubmit ={this.buttonSubmit} savedTag = {this.state.savedTag}/>
-              {markerInfoBox}
+              </div>
             </div>
             {markerForm}
-            </div>
+          </div>
         )
     }
 }
