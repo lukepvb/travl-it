@@ -5,6 +5,8 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const cloudinary = require('cloudinary')
+const formData = require('express-form-data')
 
 const PORT = 8080;
 
@@ -13,7 +15,7 @@ const app = express();
 const userController = require('./controllers/controller');
 
 
-
+app.use(formData.parse())
 app.use(bodyParser.json());
 
 // route to get all markers and main page
@@ -35,9 +37,13 @@ app.post('/addMarker', userController.addMarker, (req, res) => {
   res.status(200).send("Marker created!");
 })
 
+app.post('/addImage', userController.addImage, (req, res) => {
+  res.status(200).json(res.locals.newImgURL)
+})
+
 // route to update marker when you submit form
 app.patch('/updateMarker', userController.updateMarker, userController.getOneMarker, (req, res) => {
-  res.status(200).json({ updatedMarker: res.locals.oneMarker });
+  res.status(200).json({ updatedMarker: res.locals.oneMarker});
 })
 
 //this is a test to see if the query to the DB works - had to use another route because of the original '/' get request that serves the index.html

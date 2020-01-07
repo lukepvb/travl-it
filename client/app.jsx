@@ -18,7 +18,9 @@ export default class App extends Component {
         this.state = {
             imgList: [],
             userWhiteList: [],
-            markerList: [{tag: 'food', location: {lat: 45, lng: 45}, description: 'this tag is a test of tags', imgURL: 'this is a URL '}],
+            markerList: [{tag: 'food', location: {lat: 45, lng: 45}, description: 'this tag is a test of tags', imgURL: ['https://res.cloudinary.com/travelappcloud/image/upload/v1578338991/g7e9d1it4zaxsr4ahatz.png']
+
+}],
             locationInfo: '',
             tagInfo: '',
             descriptionInfo: '',
@@ -26,16 +28,76 @@ export default class App extends Component {
             searchTag: '',
             savedTag: '',
             whiteListUserInfo: '',
-            clickedMarker: ''
+            clickedMarker: '',
+            images: [],
     }
     this.onChange = this.onChange.bind(this);
+    this.onPicChange = this.onPicChange.bind(this);
     this.clickMap = this.clickMap.bind(this);
     this.clickMarker = this.clickMarker.bind(this);
     this.onSubmit= this.onSubmit.bind(this);
     this.buttonSubmit=this.buttonSubmit.bind(this);
     }
     
+    onPicChange(e) {
+    const files = Array.from(e.target.files)
+    // this.setState({ uploading: true })
+
+    const formData = new FormData()
+
+    files.forEach((file, i) => {
+      formData.append(i, file)
+    })
+    console.log(formData)
+    const addtoSQL = 'https://res.cloudinary.com/travelappcloud/image/upload/' 
+
+    fetch('/addImage', {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.json())
+    .then(res => {
+        console.log('just url from res' , res)
+        // console.log('url returned', res[0].url)
+        console.log(this.state.clickedMarker)
+        let newURL = [res];
+        let clicked = this.state.clickedMarker;
+        let oldImgURL = clicked.imgURL;
+        console.log('oldurl=',oldImgURL)
+            // if (oldImgURL) {
+            //     console.log('inside if oldimgurl' , oldImgURL)
+            //     oldImgURL.forEach(url => {
+            //         newURL.push(oldImgURL)
+            //     })
+            //     // newURL = newURL.push(oldImgURL)
+            // }
+        // newURL = newURL.concat(oldImgURL)
+        let modifiedMarker = Object.assign(clicked, {imgURL: newURL});
+
+        fetch('/updateMarker', {
+            method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
+            body: JSON.stringify({...modifiedMarker, longitude: modifiedMarker.location.lng, latitude: modifiedMarker.location.lat}), // body data type must match "Content-Type" header
+            //mode: 'cors', // no-cors, *cors, same-origin
+            //cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            //credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+              'Content-Type': 'application/json'
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            //redirect: 'follow', // manual, *follow, error
+            //referrerPolicy: 'no-referrer', // no-referrer, *client
+            
+          })
+    })
+    .then(images => {
+      this.setState({ 
+        images
+      }, (images)=> {
+        //   console.log(images)
+      })
+    })
     
+    }
     clickMarker(e) {
         // console.log(e)
         // console.log( "Latitude: "+e.latLng.lat()+" "+", longitude: "+e.latLng.lng())
@@ -56,7 +118,7 @@ export default class App extends Component {
         this.setState({markerList: newMarkerList})
         fetch('/addMarker', {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            body: JSON.stringify({...newMarker, longitude: newMarker.location.lng, latitude: newMarker.location.lat}), // body data type must match "Content-Type" header
+            body: JSON.stringify({...newMarker, longitude: newMarker.location.lng, latitude: newMarker.location.lat, savedTag: ''}), // body data type must match "Content-Type" header
             //mode: 'cors', // no-cors, *cors, same-origins
             //cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             //credentials: 'same-origin', // include, *same-origin, omit
@@ -93,7 +155,7 @@ export default class App extends Component {
         //does stuff on forms submits
         //take the stored information and update the state   
         e.preventDefault();     
-        const clicked = this.state.clickedMarker;
+        let clicked = this.state.clickedMarker;
         let imgProps = '';
         let imgListVar = this.state.imgURL;
         console.log(this.state.imgURL)
@@ -107,7 +169,7 @@ export default class App extends Component {
             }
         }
         console.log('before modified marker' ,this.state.descriptionInfo)
-        const modifiedMarker = Object.assign(clicked, {tag: this.state.tagInfo || clicked.tag, description: this.state.descriptionInfo || clicked.description, imgURL: imgProps || clicked.imgURL});
+        let modifiedMarker = Object.assign(clicked, {tag: this.state.tagInfo || clicked.tag, description: this.state.descriptionInfo || clicked.description,});
         console.log('in submit showing modMarker' , modifiedMarker, modifiedMarker.description)
         let newMarkerList = [...this.state.markerList];
         newMarkerList = newMarkerList.filter((marker) => {
@@ -140,7 +202,7 @@ export default class App extends Component {
         fetch('/api')
           .then(res => res.json())
           .then((markers) => {
-            //console.log('inside this.componentDidMount res:', markers)
+            console.log('inside this.componentDidMount res:', markers)
             let newMarkerList;
             markers = markers.markersList;
              
@@ -149,6 +211,12 @@ export default class App extends Component {
                     let currMarker = markers[i];
                     currMarker.location = {lat: parseInt(currMarker.latitude), lng: parseInt(currMarker.longitude)}
                     console.log('current Marker is ' , currMarker)
+                    if (currMarker.imgURL) {
+                       currMarker.imgURL = currMarker.imgURL.concat(currMarker.urls) 
+                    }
+                    else {
+                        currMarker.imgURL = [currMarker.urls]
+                    }
                     newMarkerList.push(currMarker)
                 }
                 //console.log(newUserList)
@@ -167,7 +235,7 @@ export default class App extends Component {
       let markerInfoBox; 
       let imageDisplay;
       if(this.state.clickedMarker){
-        markerForm = <MarkerForm imgURL={this.state.imgURL} tagInfo = {this.state.tagInfo} locationInfo={this.state.locationInfo} descriptionInfo={this.state.descriptionInfo} onChange ={this.onChange} onSubmit={this.onSubmit}/>
+        markerForm = <MarkerForm onPicChange={this.onPicChange} imgURL={this.state.imgURL} tagInfo = {this.state.tagInfo} locationInfo={this.state.locationInfo} descriptionInfo={this.state.descriptionInfo} onChange ={this.onChange} onSubmit={this.onSubmit}/>
       }
       
       if(this.state.clickedMarker.tag || this.state.clickedMarker.description){
