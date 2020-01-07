@@ -9,8 +9,7 @@ import {
     InfoWindow
   } from "react-google-maps";
 
-
-
+import mapStyle from '../mapStyle';
 // const AnyReactComponent = ({ text }) => <div>{text}</div>;
 class MapDisplay extends Component {
   constructor(props) {
@@ -31,12 +30,17 @@ class MapDisplay extends Component {
           onClick={clickMap}
           defaultZoom={4}
           defaultCenter={{lat: 39.82, lng: -98.57}}
+          defaultOptions ={{styles: mapStyle}}
           >
             {currentMarkerList.map((marker, i) => (
               <Marker 
                 onClick={clickMarker}
                 key={i}
                 position={{ lat: marker.location.lat, lng: marker.location.lng}}
+                icon = {{
+                  url: '/icon3.png', 
+                  scaledSize:new window.google.maps.Size(30,30)}
+              }
               />
             ))
               }
@@ -53,7 +57,7 @@ class MapDisplay extends Component {
       return (
         <div>
           <div>
-            <input type = "text" name = "searchTag" placeholder="Filter marker by tag" onChange = {this.props.onChange} value={this.props.searchTag}/>
+            <input id ="searchTag" type = "text" name = "searchTag" placeholder="Filter marker by tag" onChange = {this.props.onChange} value={this.props.searchTag}/>
             <button onClick = {this.props.buttonSubmit}>submit</button>
           </div>
           <div style={{ width: '70vw' , height: '70vh'}}>
