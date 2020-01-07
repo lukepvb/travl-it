@@ -4,7 +4,6 @@
 
 const express = require('express');
 const path = require('path');
-const bodyParser = require('body-parser');
 const cloudinary = require('cloudinary')
 const formData = require('express-form-data')
 
