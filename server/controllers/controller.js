@@ -96,7 +96,7 @@ controller.addMarker = (req, res, next) => {
     const { longitude, latitude } = req.body;
     const addMarkerQuery = 
     `INSERT INTO location (longitude, latitude, users_id)
-    VALUES ('${longitude}', '${latitude}', 1);`
+    VALUES ('${parseInt(longitude)}', '${parseInt(latitude)}', 1);`
     db.query(addMarkerQuery)
         .then(newMarker => {
             // console.log('added it', newMarker)
@@ -137,7 +137,7 @@ controller.updateMarker = (req, res, next) => {
     `BEGIN TRANSACTION;
     UPDATE location
     SET description = '${description}', tag = '${tag}', location = '${location}', urls='${imgURL}'
-    WHERE latitude = '${latitude}' AND longitude = '${longitude}';
+    WHERE latitude = '${parseInt(latitude)}' AND longitude = '${parseInt(longitude)}';
     COMMIT;`
     db.query(updateMarkerQuery)
         .then(updatedMarker => {

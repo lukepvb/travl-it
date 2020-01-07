@@ -1,10 +1,17 @@
-#map{
+body {
+  background-image: linear-gradient(to top, #fff1eb 0%, #2ea0b4 100%);
+  
 }
+
+
 #searchTag{
   width: 25%;
   padding-right: 10px;
 }
-
+.markerInfoBox {
+  font-size: 40px;
+  font-family: 'Caveat', cursive;
+}
 .title {
   display: inline-block; 
   position: relative;
@@ -47,7 +54,7 @@ button{
 }
 
 .form{
-  background-color:red;
+  
 
 }
 
@@ -64,6 +71,6 @@ button{
   display: inline-block;
   width: 100vw;
 }
-.testing{
+/* .testing{
   border: 10px solid transparent;
-}
+} */

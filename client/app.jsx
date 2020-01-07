@@ -157,17 +157,17 @@ export default class App extends Component {
         e.preventDefault();     
         let clicked = this.state.clickedMarker;
         let imgProps = '';
-        let imgListVar = this.state.imgURL;
-        console.log(this.state.imgURL)
-        imgListVar = imgListVar.split('-');
-        console.log('imglistvariable' , imgListVar)
-        if (imgListVar[0]) {
-            imgProps = imgListVar
+        // let imgListVar = this.state.imgURL;
+        // console.log(this.state.imgURL)
+        // imgListVar = imgListVar.split('-');
+        // console.log('imglistvariable' , imgListVar)
+        // if (imgListVar[0]) {
+        //     imgProps = imgListVar
 
-            if (clicked.imgURL) {
-            imgProps = imgListVar.concat(clicked.imgURL)
-            }
-        }
+        //     if (clicked.imgURL) {
+        //     imgProps = imgListVar.concat(clicked.imgURL)
+        //     }
+        // }
         console.log('before modified marker' ,this.state.descriptionInfo)
         let modifiedMarker = Object.assign(clicked, {tag: this.state.tagInfo || clicked.tag, description: this.state.descriptionInfo || clicked.description,});
         console.log('in submit showing modMarker' , modifiedMarker, modifiedMarker.description)
