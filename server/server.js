@@ -2,6 +2,7 @@
 //2. send information to the database to save 
 //3. parse through the information (from the db query) and send that information back to the frontend so we can use it to change the state
 
+const mongoose = require('mongoose');
 const express = require('express');
 const path = require('path');
 const cloudinary = require('cloudinary')
@@ -12,6 +13,16 @@ const PORT = 3000;
 const app = express();
 
 const userController = require('./controllers/controller');
+
+const db = require('./config/keys').mongoURI;
+
+// connect to MongoDB
+mongoose
+.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+.then (() => console.log('MongoDB Connected...'))
+.catch(err => console.log(`DATABASE ERROR ${err}`))
+
+
 
 
 app.use(formData.parse())
@@ -75,6 +86,9 @@ app.use((err, req, res, next) => {
   console.log(errorObj.log);
   return res.status(errorObj.status).json(errorObj.message);
 });
+
+
+
 
 app.listen(PORT, () => { console.log(`Listening on port ${PORT}...`); });
 
