@@ -41,8 +41,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-console.log("On line 44");
-
 // app.get("/api", userController.getMarkers, (req, res) => {
 //   res.status(200).json({ markersList: res.locals.markersList });
 // });
@@ -65,12 +63,10 @@ console.log("On line 44");
 //   }
 // );
 
-console.log("Before /getUsers");
 //this is a test to see if the query to the DB works - had to use another route because of the original '/' get request that serves the index.html
-app.get("/getUsers", userController.getUserByUsername, (req, res) => {
-  res.status(200).send("Query successfull: Got all users by username");
+app.get("/getUser", userController.getUserByUsername, (req, res) => {
+  res.status(200).send("Query successfull: Got user by username!");
 });
-console.log("After /getUsers");
 
 app.get("/", (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "../client/index.html"));

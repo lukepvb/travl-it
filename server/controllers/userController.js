@@ -8,7 +8,8 @@ const userController = {};
 // before moving on to next middleware.
 
 userController.getUserByUsername = (req, res, next) => {
-  User.find({ username: req.body.username }, (err, users) => {
+  const { username } = req.body;
+  User.find({ username }, (err, user) => {
     // if a database error occurs, call next with the error message passed in
     // for the express global error handler to catch
     if (err) {
@@ -18,7 +19,8 @@ userController.getUserByUsername = (req, res, next) => {
     }
 
     // store retrieved users into res.locals and move on to next middleware
-    res.locals.users = users;
+    res.locals.user = user;
+    console.log(res.locals);
     return next();
   });
 };
