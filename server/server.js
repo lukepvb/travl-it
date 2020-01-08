@@ -41,32 +41,36 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.get("/api", userController.getMarkers, (req, res) => {
-  res.status(200).json({ markersList: res.locals.markersList });
-});
-// route to create a marker on first click
-app.post("/addMarker", userController.addMarker, (req, res) => {
-  res.status(200).send("Marker created!");
-});
+console.log("On line 44");
 
-app.post("/addImage", userController.addImage, (req, res) => {
-  res.status(200).json(res.locals.newImgURL);
-});
+// app.get("/api", userController.getMarkers, (req, res) => {
+//   res.status(200).json({ markersList: res.locals.markersList });
+// });
+// // route to create a marker on first click
+// app.post("/addMarker", userController.addMarker, (req, res) => {
+//   res.status(200).send("Marker created!");
+// });
 
-// route to update marker when you submit form
-app.patch(
-  "/updateMarker",
-  userController.updateMarker,
-  userController.getOneMarker,
-  (req, res) => {
-    res.status(200).json({ updatedMarker: res.locals.oneMarker });
-  }
-);
+// app.post("/addImage", userController.addImage, (req, res) => {
+//   res.status(200).json(res.locals.newImgURL);
+// });
 
+// // route to update marker when you submit form
+// app.patch(
+//   "/updateMarker",
+//   userController.updateMarker,
+//   userController.getOneMarker,
+//   (req, res) => {
+//     res.status(200).json({ updatedMarker: res.locals.oneMarker });
+//   }
+// );
+
+console.log("Before /getUsers");
 //this is a test to see if the query to the DB works - had to use another route because of the original '/' get request that serves the index.html
 app.get("/getUsers", userController.getUserByUsername, (req, res) => {
   res.status(200).send("Query successfull: Got all users by username");
 });
+console.log("After /getUsers");
 
 app.get("/", (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "../client/index.html"));

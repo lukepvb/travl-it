@@ -11,13 +11,16 @@ userController.getUserByUsername = (req, res, next) => {
   User.find({ username: req.body.username }, (err, users) => {
     // if a database error occurs, call next with the error message passed in
     // for the express global error handler to catch
-    if (err)
+    if (err) {
       return next(
         "Error in userController.getUserByUsername: " + JSON.stringify(err)
       );
+    }
 
     // store retrieved users into res.locals and move on to next middleware
     res.locals.users = users;
     return next();
   });
 };
+
+module.exports = userController;
