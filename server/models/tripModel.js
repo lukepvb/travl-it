@@ -17,7 +17,7 @@ const TripSchema = new Schema({
       index: Number,
       coordinates: [String],
       next_stop: { type: Number, default: null },
-      previous_stop: Number,
+      previous_stop: { type: Number, default: null },
       pics: [String],
       stop_comments: [
         {
