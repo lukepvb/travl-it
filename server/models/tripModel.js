@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
+const pointSchema = require('./pointSchema');
+const finalStopSchema = require('./finalStopSchema')
+
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
-const pointSchema = require('./pointSchema');
 
 const tripSchema = new Schema({
   user: { type: ObjectId, ref: 'User' },
@@ -32,7 +34,7 @@ const tripSchema = new Schema({
       ]
     }
   ],
-  finalStop: { type: pointSchema, default: null }
+  finalStop: { type: finalStopSchema }
 });
 
 const Trip = mongoose.model("Trip", tripSchema);
