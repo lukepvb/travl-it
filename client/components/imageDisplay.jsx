@@ -1,22 +1,21 @@
-import React, { Component } from 'react';
+import React, {useContext}  from 'react';
+import {MapDisplayContext} from '../context/MapDisplayContext'
 
-function Image({clickedMarker}){
+
+
+function Image(props){
+  const { mapDisState } = useContext(MapDisplayContext);
+  console.log('APPP JSSSS',mapDisState);
   let images = [];
-  if (clickedMarker.imgURL) {
-    
-    for (let i = 0; i < clickedMarker.imgURL.length; i += 1) {
-    let img = clickedMarker.imgURL[i];
-    console.log(img)
+  if (mapDisState.clickedMarker.imgURL) {
+    for (let i = 0; i < mapDisState.clickedMarker.imgURL.length; i += 1) {
+    let img = mapDisState.clickedMarker.imgURL[i];
     images.push(<img src={img} key={i}/>)
   }
   }
-  
   return(
     <div>
-        
-
         {images}
-
     </div>
   )
 }
