@@ -12,7 +12,7 @@ const PORT = 3000;
 
 const app = express();
 
-const userController = require("./controllers/controller");
+const userController = require("./controllers/userController");
 
 const db = require("./config/keys").mongoURI;
 
@@ -64,8 +64,8 @@ app.patch(
 );
 
 //this is a test to see if the query to the DB works - had to use another route because of the original '/' get request that serves the index.html
-app.get("/getusers", userController.getUser, (req, res) => {
-  res.status(200).send("this works man!");
+app.get("/getUsers", userController.getUserByUsername, (req, res) => {
+  res.status(200).send("Query successfull: Got all users by username");
 });
 
 app.get("/", (req, res) => {
