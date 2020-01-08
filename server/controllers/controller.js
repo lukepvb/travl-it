@@ -1,6 +1,5 @@
 //need to rename this file, set better middleware names and make actual queries that use logic to change the query information into tangible data for our frontend to use to change the state
 
-const db = require('../models/dbModel');
 const cloudinary = require('cloudinary')
 const formData = require('express-form-data')
 
