@@ -1,13 +1,16 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-var ObjectId = Schema.Types.ObjectId;
+const pointSchema = require('./pointSchema');
+const finalStopSchema = require('./finalStopSchema')
 
-const TripSchema = new Schema({
-  user: String,
+const Schema = mongoose.Schema;
+const ObjectId = Schema.Types.ObjectId;
+
+const tripSchema = new Schema({
+  user: { type: ObjectId, ref: 'User' },
   date: { type: Date, default: Date.now },
   comments: [
     {
-      user: ObjectId,
+      user: { type: ObjectId, ref: 'User' },
       body: String,
       date: Date
     }
@@ -15,19 +18,25 @@ const TripSchema = new Schema({
   stops: [
     {
       index: Number,
-      coordinates: [String],
+      location: {
+        type: pointSchema,
+        required: true
+      },
       next_stop: { type: Number, default: null },
       previous_stop: { type: Number, default: null },
       pics: [String],
       stop_comments: [
         {
-          user: ObjectId,
+          user: { type: ObjectId, ref: 'User' },
           body: String,
           date: Date
         }
       ]
     }
-  ]
+  ],
+  finalStop: { type: finalStopSchema }
 });
 
-module.exports = Trip = mongoose.model("Trip", TripSchema);
+const Trip = mongoose.model("Trip", tripSchema);
+
+module.exports = Trip;

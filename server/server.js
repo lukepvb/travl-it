@@ -16,8 +16,6 @@ const userController = require("./controllers/controller");
 
 const db = require("./config/keys").mongoURI;
 
-const Trip = require("./models/tripModel");
-
 // connect to MongoDB
 mongoose
   .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -92,7 +90,5 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}...`);
 });
-
-Trip.create({ user: "Taylor " }).then(doc => console.log(doc));
 
 module.exports = app;
