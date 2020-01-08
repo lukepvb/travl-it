@@ -1,6 +1,6 @@
 //this is a react component wow
 
-import React from 'react';
+import React, {useState} from 'react';
 import {
   withGoogleMap,
   withScriptjs,
@@ -11,7 +11,19 @@ import {
 
 import mapStyle from '../mapStyle';
 
+//------- MY CODE --------------------------------------
 function MapDisplay(props) {
+  const useInput = init => {
+    const [value, setValue] = useState(init);
+    const onChange = e => {
+      setValue(e.target.value);
+    };
+    // return the value with the onChange function instead of setValue function
+    return [value, onChange];
+  };
+  const [searchTag, setSearchState] = useInput('');
+//------- MY CODE --------------------------------------
+
   let currentMarkerList = props.markerList;
   let clickMap = props.clickMap;
   let clickMarker = props.clickMarker;
@@ -50,7 +62,14 @@ function MapDisplay(props) {
   return (
     <div>
       <div>
-        <input id="searchTag" type="text" name="searchTag" placeholder="Filter marker by tag" onChange={props.onChange} value={props.searchTag} />
+        <input
+            id="searchTag"
+            type="text"
+            name="searchTag"
+            placeholder="Filter marker by tag"
+            onChange={setSearchState}
+            value={searchTag}
+        />
         <button onClick={props.buttonSubmit}>submit</button>
       </div>
       <div style={{ width: '70vw', height: '70vh' }}>

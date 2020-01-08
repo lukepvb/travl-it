@@ -21,16 +21,12 @@ export default class App extends Component {
         tag: 'food', location: { lat: 45, lng: 45 }, description: 'this tag is a test of tags', imgURL: ['https://res.cloudinary.com/travelappcloud/image/upload/v1578338991/g7e9d1it4zaxsr4ahatz.png']
       }],
       locationInfo: '',
-      tagInfo: '',
-      descriptionInfo: '',
-      imgURL: '',
       searchTag: '',
       savedTag: '',
       whiteListUserInfo: '',
       clickedMarker: '',
       images: [],
-    }
-    this.onChange = this.onChange.bind(this);
+    };
     this.onPicChange = this.onPicChange.bind(this);
     this.clickMap = this.clickMap.bind(this);
     this.clickMarker = this.clickMarker.bind(this);
@@ -59,30 +55,22 @@ export default class App extends Component {
         let newURL = [res];
         let clicked = this.state.clickedMarker;
         let oldImgURL = clicked.imgURL;
-  
+
 
         let modifiedMarker = Object.assign(clicked, { imgURL: newURL });
 
         fetch('/updateMarker', {
           method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
           body: JSON.stringify({ ...modifiedMarker, longitude: modifiedMarker.location.lng, latitude: modifiedMarker.location.lat }), // body data type must match "Content-Type" header
-          //mode: 'cors', // no-cors, *cors, same-origin
-          //cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-          //credentials: 'same-origin', // include, *same-origin, omit
           headers: {
             'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
           },
-          //redirect: 'follow', // manual, *follow, error
-          //referrerPolicy: 'no-referrer', // no-referrer, *client
-
         })
       })
       .then(images => {
         this.setState({
           images
         }, (images) => {
-          //   console.log(images)
         })
       })
 
@@ -93,7 +81,7 @@ export default class App extends Component {
     let clickedMarker = [...this.state.markerList];
     clickedMarker = clickedMarker.filter((marker) => {
       return (marker.location.lat == e.latLng.lat() && marker.location.lng == e.latLng.lng())
-    })
+    });
     this.setState({ clickedMarker: clickedMarker[0] })
   }
 
@@ -105,7 +93,7 @@ export default class App extends Component {
     this.setState({ markerList: newMarkerList })
     fetch('/addMarker', {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      body: JSON.stringify({ ...newMarker, longitude: newMarker.location.lng, latitude: newMarker.location.lat, savedTag: '' }), 
+      body: JSON.stringify({ ...newMarker, longitude: newMarker.location.lng, latitude: newMarker.location.lat, savedTag: '' }),
       headers: {
         'Content-Type': 'application/json'
       },
@@ -118,11 +106,7 @@ export default class App extends Component {
     ///works but in reality we should be doing fetch/post here instead of changing state
 
   }
-  onChange(e) {
-    //takes typed information and sets relevant state
-    this.setState({ [e.target.name]: e.target.value }, () => {
-    })
-  }
+
   buttonSubmit() {
     this.setState({ savedTag: this.state.searchTag, searchTag: '' }, () => {
       console.log(`savedTag`, this.state.savedTag);
@@ -132,14 +116,14 @@ export default class App extends Component {
   }
   onSubmit(e) {
     //does stuff on forms submits
-    //take the stored information and update the state   
+    //take the stored information and update the state
     e.preventDefault();
     let clicked = this.state.clickedMarker;
     let imgProps = '';
- 
+
 
     let modifiedMarker = Object.assign(clicked, { tag: this.state.tagInfo || clicked.tag, description: this.state.descriptionInfo || clicked.description, });
- 
+
     let newMarkerList = [...this.state.markerList];
     newMarkerList = newMarkerList.filter((marker) => {
       return (marker.location.lat !== this.state.clickedMarker.location.lat || marker.location.lng !== this.state.clickedMarker.location.lng)
@@ -150,7 +134,7 @@ export default class App extends Component {
 
     fetch('/updateMarker', {
       method: 'PATCH',
-      body: JSON.stringify({ ...modifiedMarker, longitude: modifiedMarker.location.lng, latitude: modifiedMarker.location.lat }), 
+      body: JSON.stringify({ ...modifiedMarker, longitude: modifiedMarker.location.lng, latitude: modifiedMarker.location.lat }),
       headers: {
         'Content-Type': 'application/json'
       },
