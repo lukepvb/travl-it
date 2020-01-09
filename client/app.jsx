@@ -1,10 +1,10 @@
 
 import React, {useEffect, useContext} from 'react';
 import { render } from 'react-dom';
-import MapDisplay from './components/mapDisplay.jsx';
-import MarkerForm from './components/markerForm.jsx';
-import ImageDisplay from './components/imageDisplay.jsx';
-import MarkerInfoBox from './components/markerInfoBox.jsx';
+import MapDisplay from './components/MapDisplay.jsx';
+import MarkerForm from './components/MarkerForm.jsx';
+import ImageDisplay from './components/ImageDisplay.jsx';
+import MarkerInfoBox from './components/MarkerInfoBox.jsx';
 import TagSearch from "./components/TagSearch";
 import style from './style.css'
 import { Animated } from 'react-animated-css';
