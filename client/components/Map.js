@@ -20,7 +20,7 @@ const Map = (props) => {
       .catch(err => {
         console.log(`ERROR: Map useEffect Fetch ERROR: ${err}`);
       });
-  }, []);
+  }, [mapDisplayState]);
 
   return (
     <GoogleMap
