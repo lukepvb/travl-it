@@ -3,6 +3,7 @@ import mapStyle from "../mapStyle";
 import React, {useContext, useEffect} from "react";
 import { MapDisplayContext } from "../context/MapDisplayContext";
 
+
 const Map = (props) =>  {
     const {mapDisplayState, clickMarker, clickMap, setMapDisplayState} = useContext(MapDisplayContext);
     let currentMarkerList = mapDisplayState.markerList;
@@ -16,19 +17,7 @@ const Map = (props) =>  {
                 )
             })
         }, []);
-    // const markerList = rawMarkers;
-    // console.log('LOADING MARKERLIST', rawMarkers);
-    // setMapDisplayState(
-    //     ...mapDisplayState,
-    //     markerList
-    // );
 
-
-    // if (mapDisplayState.savedTag) {
-    //     currentMarkerList = currentMarkerList.filter((marker) => {
-    //         return marker.tag === mapDisplayState.savedTag;
-    //     })
-    // }
 
     return (
         <GoogleMap
@@ -47,6 +36,6 @@ const Map = (props) =>  {
             }
         </GoogleMap>
     )
-}
+};
 
 export default withScriptjs(withGoogleMap(Map));
