@@ -3,7 +3,7 @@ const Trip = require('../models/tripModel');
 const tripController = {};
 
 tripController.getTripById = (req, res, next) => {
-  const { tripId } = req.params.tripId;
+  const { tripId } = req.params;
 
   Trip.findById(tripId)
     .exec()
@@ -48,13 +48,12 @@ tripController.createTrip = (req, res, next) => {
 }
 
 tripController.deleteTrip = (req, res, next) => {
-  const { tripId } = req.body;
+  const { tripId } = req.params;
 
   Trip.findByIdAndDelete(tripId)
     .exec()
     .then(tripDoc => {
-      console.log('Doc Deleted: ', tripDoc);
-      res.locals.tripDeleted = true;
+      res.locals.deleteSuccess = true;
     })
     .catch(err => {
       return next({
@@ -65,16 +64,20 @@ tripController.deleteTrip = (req, res, next) => {
 }
 
 tripController.updateTrip = (req, res, next) => {
-  const { updateField, updateValue, tripId } = req.body;
+  const { updateField, updateValue } = req.body;
+  const { tripId } = req.params;
   // use a 'setter' object to dynamically set the field to be updated
   // based on the 'updateField' sent in the request body
   const setObj = {};
   setObj[updateField] = updateValue;
-
+  console.log('setObj: ', setObj)
   Trip.findByIdAndUpdate(tripId, setObj)
     .exec()
     .then(updatedTrip => {
-      res.locals.updatedFieldValue = updatedTrip[updateField];
+      const newTrip = updatedTrip;
+      res.locals.updateField = updateField;
+      res.locals.updatedFieldValue = newTrip[updateField];
+      return next();
     })
     .catch(err => {
       return next({

@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const path = require('path');
-const cloudinary = require('cloudinary');
 const formData = require('express-form-data');
-const apiRouter = require('./routes/api');
+const router = require('./routes/api');
 const app = express();
 
 const PORT = 3000;
@@ -37,11 +36,8 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.use('/api', apiRouter);
+app.use('/api', router);
 
-// app.get('/api', userController.getMarkers, (req, res) => {
-//   res.status(200).json({ markersList: res.locals.markersList });
-// });
 // route to create a marker on first click
 app.post('/addMarker', userController.addMarker, (req, res) => {
   res.status(200).send('Marker created!');
@@ -60,11 +56,6 @@ app.patch(
     res.status(200).json({ updatedMarker: res.locals.oneMarker });
   }
 );
-
-//this is a test to see if the query to the DB works - had to use another route because of the original '/' get request that serves the index.html
-app.get('/getusers', userController.getUser, (req, res) => {
-  res.status(200).send('this works man!');
-});
 
 app.get('/', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '../client/index.html'));

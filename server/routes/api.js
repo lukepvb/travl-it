@@ -4,3 +4,5 @@ const router = express.Router();
 
 
 router.use('/trips', tripRouter);
+
+module.exports = router;
