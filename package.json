@@ -6,8 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production node server/server.js",
     "build": "cross-env NODE_ENV=production webpack",
-    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --inline --colors --watch --no-info --quiet --content-base ./\" \"nodemon ./server/server.js\"",
-    "server": "nodemon server/server.js"
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --inline --colors --watch --no-info --quiet --content-base ./\" \"nodemon ./server/server.js\""
   },
   "author": "",
   "license": "ISC",
@@ -24,27 +23,30 @@
     "react": "^16.12.0",
     "react-animated-css": "^1.2.1",
     "react-dom": "^16.12.0",
-    "react-google-maps": "^9.4.5"
+    "react-google-maps": "^9.4.5",
+    "react-grid-gallery": "^0.5.5",
+    "react-images": "^1.1.0-beta.1",
+    "react-photo-gallery": "^8.0.0"
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.7.4",
-    "webpack": "^4.41.5",
-    "concurrently": "^5.0.2",
-    "webpack-dev-server": "^3.10.1",
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
+    "@babel/preset-react": "^7.7.4",
     "babel-loader": "^8.0.6",
-    "css-loader": "^3.4.1",
-    "style-loader": "^1.1.2",
     "babel-preset-stage-1": "^6.24.1",
-    "file-loader": "^5.0.2",
-    "nodemon": "^2.0.2",
-    "webpack-cli": "^3.3.10",
     "clean-webpack-plugin": "^3.0.0",
+    "concurrently": "^5.0.2",
     "cross-env": "^6.0.3",
+    "css-loader": "^3.4.1",
+    "file-loader": "^5.0.2",
+    "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.13.0",
+    "nodemon": "^2.0.2",
     "sass-loader": "^8.0.0",
+    "style-loader": "^1.1.2",
     "url-loader": "^3.0.0",
-    "html-webpack-plugin": "^3.2.0"
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
   }
 }
