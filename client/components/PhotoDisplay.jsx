@@ -1,4 +1,5 @@
 import React from 'react';
+import ImageGallery from './ImageGallery.jsx';
 
 const PhotoDisplay = props => {
 
@@ -6,6 +7,7 @@ const PhotoDisplay = props => {
     <div>
       <h3>Photo Display</h3>
       <p>A photo or image gallery</p>
+      <ImageGallery />
     </div>
   )
 }
