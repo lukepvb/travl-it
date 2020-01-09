@@ -21,7 +21,6 @@ tripController.getTripById = (req, res, next) => {
 
 tripController.createTrip = (req, res, next) => {
   const { user, date, comments, stops, finalStop } = req.body;
-
   Trip.create({
     user,
     date,
@@ -30,15 +29,20 @@ tripController.createTrip = (req, res, next) => {
     finalStop
   })
     .then(tripDoc => {
-      res.locals.newTrip = tripDoc;
-      return next();
+      Trip.findByIdAndUpdate(tripDoc._id, { 'finalStop.tripId': tripDoc._id }, { new: true })
+        .exec()
+        .then(updatedTrip => {
+          const newTrip = updatedTrip;
+          res.locals.newTrip = newTrip;
+          return next();
+        })
+        .catch(err => {
+          return next({
+            log: `ERROR: tripController.createTrip: ERROR: ${err}`,
+            message: `ERROR: tripController.createTrip: ERROR: see server log for details`
+          });
+        });
     })
-    .catch(err => {
-      return next({
-        log: `ERROR: tripController.createTrip: ERROR: ${err}`,
-        message: `ERROR: tripController.createTrip: ERROR: see server log for details`
-      });
-    });
 };
 
 tripController.deleteTrip = (req, res, next) => {
@@ -81,15 +85,12 @@ tripController.updateTrip = (req, res, next) => {
     });
 };
 
-// find all trips, store in array, and map over array to pull out all finalDestination data, send this data on a get request
+// find all trips, runs on main map load
 tripController.findAllDestinations = (req, res, next) => {
-  // find all trips
   Trip.find({})
     .exec()
     .then(trips => {
       const tripsList = trips;
-      // console.log(tripsList)
-      // the finalStop is not showing up as a key on the trip object returned in the array of trips
       const destinations = [];
       tripsList.forEach(trip => {
         if (trip.finalStop) {
