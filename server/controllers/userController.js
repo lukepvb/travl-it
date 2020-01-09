@@ -6,13 +6,13 @@ const userController = {};
 
 userController.createUser = (req, res, next) => {
   const { name, username, password, email } = req.body;
+
   User.create({
     name,
     username,
     password,
     email
   })
-    .exec()
     .then(newUser => {
       res.locals.newUser = newUser;
       return next();
@@ -29,6 +29,7 @@ userController.createUser = (req, res, next) => {
 
 userController.getUserByUsername = (req, res, next) => {
   const { username } = req.body;
+
   User.find({ username })
     .exec()
     .then(user => {
@@ -48,6 +49,7 @@ userController.getUserByUsername = (req, res, next) => {
 
 userController.deleteUserByUsername = (req, res, next) => {
   const { username } = req.body;
+
   User.findOneAndDelete({ username })
     .exec()
     .then(user => {

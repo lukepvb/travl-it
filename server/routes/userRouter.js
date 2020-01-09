@@ -14,10 +14,8 @@ router.delete(
   "/users",
   userController.deleteUserByUsername,
   (req, res, next) => {
-    res.status(200); // not sure how to write this piece out
+    res.sendStatus(200);
   }
 );
-
-router.get;
 
 module.exports = router;
