@@ -13,7 +13,9 @@ const PORT = 3000;
 const app = express();
 
 const userController = require("./controllers/userController");
+const userRouter = require("./routes/userRouter");
 
+// require in database URI key
 const db = require("./config/keys").mongoURI;
 
 // connect to MongoDB
@@ -63,18 +65,11 @@ if (process.env.NODE_ENV === "production") {
 //   }
 // );
 
+// Routes : Any request made to /user will be directed to userRouter
+app.use("/user", userRouter);
+
 app.get("/", (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "../client/index.html"));
-});
-
-// Get a specific user by their username
-app.use("", userController.getUserByUsername, (req, res) => {
-  res.status(200).send("Query successfull: Got specific user by username!");
-});
-
-// Create and add new user to the database
-app.post("/users", userController.createUser, (req, res) => {
-  res.status(200).send("Success: New user created in database!");
 });
 
 app.use("*", (req, res) => {
