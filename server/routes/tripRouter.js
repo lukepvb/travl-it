@@ -8,14 +8,14 @@ router.post("/create", tripController.createTrip, (req, res, next) => {
   res.status(200).json(res.locals.newTrip);
 });
 
-// get specific trip info
-router.get("/:tripId", tripController.getTripById, (req, res, next) => {
-  res.status(200).json(res.locals.trip);
-});
-
 // Get all trips
 router.get("/all", tripController.findAllDestinations, (req, res, next) => {
   res.status(200).json(res.locals.destinations);
+});
+
+// get specific trip info
+router.get("/:tripId", tripController.getTripById, (req, res, next) => {
+  res.status(200).json(res.locals.trip);
 });
 
 // update specific trip

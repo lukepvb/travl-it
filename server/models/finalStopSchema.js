@@ -6,7 +6,7 @@ const ObjectId = Schema.Types.ObjectId;
 
 const finalStopSchema = new Schema({
   location: { type: pointSchema, required: true },
-  trip: { type: ObjectId, required: true }
+  tripId: { type: ObjectId, default: null }
 });
 
 module.exports = finalStopSchema;

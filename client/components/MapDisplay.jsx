@@ -1,5 +1,3 @@
-//this is a react component wow
-
 import React from 'react';
 import Map from "./Map";
 
