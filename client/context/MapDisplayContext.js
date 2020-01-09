@@ -48,7 +48,7 @@ export const MapDisplayProvider = (props) => {
         });
     };
     return (
-        <MapDisplayContext.Provider value = {{mapDisplayState, clickMarker, clickMap, handleTagSubmit}}>
+        <MapDisplayContext.Provider value = {{mapDisplayState, clickMarker, clickMap, handleTagSubmit, setMapDisplayState}}>
             {props.children}
         </MapDisplayContext.Provider>
     )

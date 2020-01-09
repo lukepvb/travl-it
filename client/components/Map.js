@@ -1,19 +1,40 @@
 import {GoogleMap, Marker, withGoogleMap, withScriptjs} from "react-google-maps";
 import mapStyle from "../mapStyle";
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { MapDisplayContext } from "../context/MapDisplayContext";
+
+//__________________________________________________
+import MarkerForm from './MarkerForm.jsx'
+
+import { makeStyles } from '@material-ui/core/styles';
+
+import Collapse from '@material-ui/core/Collapse';
+
+import { red } from '@material-ui/core/colors';
+
+//________________________________________________
+
+
+
+
 
 
 const Map = (props) =>  {
     const {mapDisplayState, clickMarker, clickMap, setMapDisplayState} = useContext(MapDisplayContext);
     let currentMarkerList = mapDisplayState.markerList;
-
     useEffect((state) =>{
-        fetch('/api')
-            .then(res => res.json())
+        console.log('YOOOO');
+        fetch('/api/trips/all')
             .then(res => {
+                console.log('hellloooooo');
+                return res.json();
+            })
+            .then(res => {
+                console.log(res);
+                let markerList = [...mapDisplayState, ...res];
                 setMapDisplayState (
-                    ...mapDisplayState
+                    ...mapDisplayState,
+                markerList
                 )
             })
         }, []);
