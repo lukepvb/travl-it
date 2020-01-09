@@ -1,19 +1,19 @@
 import React, { useState, useContext } from 'react';
 import {MapDisplayContext} from "../context/MapDisplayContext";
 
-const Box = (props) =>{
-    const {mapDisState} = useContext(MapDisplayContext);
+const MarkerInfoBox = (props) =>{
+    const {mapDisplayState} = useContext(MapDisplayContext);
     const [isClicked, setIsClicked] = useState('');
   return(
     <div className = "markerInfoBox">
       <p>
-      tag: {mapDisState.clickedMarker.tag}
+      tag: {mapDisplayState.clickedMarker.tag}
       </p>
       <p>
-      description: {mapDisState.clickedMarker.description}
+      description: {mapDisplayState.clickedMarker.description}
       </p>
     </div>
   )
 };
 
-export default Box;
+export default MarkerInfoBox;

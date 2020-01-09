@@ -3,32 +3,30 @@ import mapStyle from "../mapStyle";
 import React, {useContext, useEffect} from "react";
 import { MapDisplayContext } from "../context/MapDisplayContext";
 
-function Map(props) {
-    const {mapDisState, clickMarker, clickMap, setMapDisState} = useContext(MapDisplayContext);
-    let currentMarkerList = mapDisState.markerList;
-    console.log(mapDisState);
+const Map = (props) =>  {
+    const {mapDisplayState, clickMarker, clickMap, setMapDisplayState} = useContext(MapDisplayContext);
+    let currentMarkerList = mapDisplayState.markerList;
 
     useEffect((state) =>{
         fetch('/api')
             .then(res => res.json())
             .then(res => {
-                console.log(res);
-                setMapDisState (
-                    ...mapDisState
+                setMapDisplayState (
+                    ...mapDisplayState
                 )
             })
         }, []);
     // const markerList = rawMarkers;
     // console.log('LOADING MARKERLIST', rawMarkers);
-    // setMapDisState(
-    //     ...mapDisState,
+    // setMapDisplayState(
+    //     ...mapDisplayState,
     //     markerList
     // );
 
 
-    // if (mapDisState.savedTag) {
+    // if (mapDisplayState.savedTag) {
     //     currentMarkerList = currentMarkerList.filter((marker) => {
-    //         return marker.tag === mapDisState.savedTag;
+    //         return marker.tag === mapDisplayState.savedTag;
     //     })
     // }
 

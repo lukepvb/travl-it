@@ -4,8 +4,7 @@ import React from 'react';
 import Map from "./Map";
 import TagSearch from "./TagSearch";
 
-//------- MY CODE --------------------------------------
-function MapDisplay(props) {
+const MapDisplay = (props) => {
   return (
     <div>
       <TagSearch/>
@@ -19,5 +18,5 @@ function MapDisplay(props) {
       </div>
     </div>
   )
-}
+};
 export default MapDisplay;

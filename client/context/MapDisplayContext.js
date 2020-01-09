@@ -3,7 +3,7 @@ import useInput from "../hooks/UseInput";
 export const MapDisplayContext = createContext();
 
 export const MapDisplayProvider = (props) => {
-    const [mapDisState, setMapDisState] = useState({
+        const [mapDisplayState, setMapDisplayState] = useState({
         markerList: [],
         searchTag: '',
         savedTag: '',
@@ -12,18 +12,18 @@ export const MapDisplayProvider = (props) => {
     });
 
     const clickMarker = (value) => {
-        const markerList = mapDisState.markerList.filter((marker) => {
+        const markerList = mapDisplayState.markerList.filter((marker) => {
             return (marker.location.lat == e.latLng.lat() && marker.location.lng == e.latLng.lng())
         });
 
-        setMapDisState({
-            ...mapDisState,
+        setMapDisplayState({
+            ...mapDisplayState,
             markerList
         })
     };
     const clickMap =  (e) => {
         // const newMarker = { tag: '', location: { lat: e.latLng.lat(), lng: e.latLng.lng() }, description: '' }
-        // const markerList = [...mapDisState.markerList, newMarker];
+        // const markerList = [...mapDisplayState.markerList, newMarker];
         // let response = await fetch('/addMarker', {
         //     method: 'POST', // *GET, POST, PUT, DELETE, etc.
         //     body: JSON.stringify({ ...newMarker, longitude: newMarker.location.lng, latitude: newMarker.location.lat, savedTag: '' }),
@@ -32,21 +32,21 @@ export const MapDisplayProvider = (props) => {
         //     },
         //
         // });
-        setMapDisState({
-            ...mapDisState
+        setMapDisplayState({
+            ...mapDisplayState
         })
     };
     const handleTagSubmit = () => {
         const [searchTag, setSearchState, reset] = useInput('');
-        const savedTag = mapDisState.savedTag;
-        setMapDisState({
-            ...mapDisState,
+        const savedTag = mapDisplayState.savedTag;
+        setMapDisplayState({
+            ...mapDisplayState,
             savedTag,
             searchTag
         });
     };
     return (
-        <MapDisplayContext.Provider value = {{mapDisState, clickMarker, clickMap, handleTagSubmit}}>
+        <MapDisplayContext.Provider value = {{mapDisplayState, clickMarker, clickMap, handleTagSubmit}}>
             {props.children}
         </MapDisplayContext.Provider>
     )

@@ -5,7 +5,7 @@ import useInput from "../hooks/UseInput";
 const TagSearch = props => {
 
     const [searchTag, setSearchState] = useInput('');
-    const {handleTagSubmit, mapDisState} = useContext(MapDisplayContext);
+    const {handleTagSubmit, mapDisplayState} = useContext(MapDisplayContext);
     return (
         <div>
             <input
