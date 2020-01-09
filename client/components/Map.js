@@ -17,19 +17,7 @@ const Map = (props) =>  {
                 )
             })
         }, []);
-    // const markerList = rawMarkers;
-    // console.log('LOADING MARKERLIST', rawMarkers);
-    // setMapDisplayState(
-    //     ...mapDisplayState,
-    //     markerList
-    // );
 
-
-    // if (mapDisplayState.savedTag) {
-    //     currentMarkerList = currentMarkerList.filter((marker) => {
-    //         return marker.tag === mapDisplayState.savedTag;
-    //     })
-    // }
 
     return (
         <GoogleMap
@@ -48,6 +36,6 @@ const Map = (props) =>  {
             }
         </GoogleMap>
     )
-}
+};
 
 export default withScriptjs(withGoogleMap(Map));

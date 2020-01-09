@@ -10,7 +10,6 @@ export const MapDisplayProvider = (props) => {
         clickedMarker: '',
         images: [],
     });
-
     const clickMarker = (value) => {
         const markerList = mapDisplayState.markerList.filter((marker) => {
             return (marker.location.lat == e.latLng.lat() && marker.location.lng == e.latLng.lng())
@@ -22,8 +21,8 @@ export const MapDisplayProvider = (props) => {
         })
     };
     const clickMap =  (e) => {
-        // const newMarker = { tag: '', location: { lat: e.latLng.lat(), lng: e.latLng.lng() }, description: '' }
-        // const markerList = [...mapDisplayState.markerList, newMarker];
+        const newMarker = { tag: '', location: { lat: e.latLng.lat(), lng: e.latLng.lng() }, description: '' }
+        const markerList = [...mapDisplayState.markerList, newMarker];
         // let response = await fetch('/addMarker', {
         //     method: 'POST', // *GET, POST, PUT, DELETE, etc.
         //     body: JSON.stringify({ ...newMarker, longitude: newMarker.location.lng, latitude: newMarker.location.lat, savedTag: '' }),
@@ -32,9 +31,12 @@ export const MapDisplayProvider = (props) => {
         //     },
         //
         // });
+        console.log('CLIIIICKED',e);
         setMapDisplayState({
-            ...mapDisplayState
-        })
+            ...mapDisplayState,
+            markerList
+        });
+        console.log(mapDisplayState);
     };
     const handleTagSubmit = () => {
         const [searchTag, setSearchState, reset] = useInput('');
