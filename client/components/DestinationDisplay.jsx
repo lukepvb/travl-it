@@ -6,12 +6,12 @@ import DescriptionDisplay from './DescriptionDisplay.jsx';
 const DestinationDisplay = props => {
 
   return (
-    <div> 
+    <div>
       <h2>Destination Display</h2>
       <PhotoDisplay />
       <DescriptionDisplay />
     </div>
   )
-}
+};
 
 export default DestinationDisplay;
