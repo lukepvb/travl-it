@@ -1,10 +1,8 @@
-const express = require("express");
-const tripRouter = require("./tripRouter");
-const userRouter = require("./userRouter");
-
+const express = require('express');
+const tripRouter = require('./tripRouter');
 const router = express.Router();
 
-router.use("/trips", tripRouter);
-router.use("/users", userRouter);
+
+router.use('/trips', tripRouter);
 
 module.exports = router;
