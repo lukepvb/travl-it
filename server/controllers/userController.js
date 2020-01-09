@@ -2,6 +2,39 @@ const User = require("../models/userModel");
 
 const userController = {};
 
+/* Check to see if a user exists by email and username in the database on signup */
+userController.verifyUser = (req, res, next) => {
+  // pull out the username and password from the body of the request
+  const { username, password } = req.body;
+
+  // check the database to find all users that match the given data
+  User.find({ username, password })
+    .exec()
+    .then(userData => {
+      // set isVerified flag to false initially
+      let isVerified = false;
+
+      // if the the specific username and password are found in database, set isVerified to true
+      if (
+        userData[0].username === username &&
+        userData[0].password === password
+      ) {
+        isVerified = true;
+        res.locals.isVerified = isVerified;
+
+        console.log("User successfully verified!");
+        return next();
+      }
+      next();
+    })
+    .catch(err => {
+      return next({
+        log: `ERROR: userController.verifyUser: ERROR ${err}`,
+        message: `ERROR: userController.verifyUser: ERROR see server log for details`
+      });
+    });
+};
+
 /* Create new user in the database */
 
 userController.createUser = (req, res, next) => {
@@ -9,12 +42,13 @@ userController.createUser = (req, res, next) => {
 
   User.create({
     name,
-    username,
+    username, // required
     password,
-    email
+    email // required
   })
     .then(newUser => {
       res.locals.newUser = newUser;
+      console.log("New User Added to the Database!");
       return next();
     })
     .catch(err => {
