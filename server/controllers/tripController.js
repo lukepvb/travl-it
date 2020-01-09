@@ -68,7 +68,6 @@ tripController.updateTrip = (req, res, next) => {
   // based on the 'updateField' sent in the request body
   const setObj = {};
   setObj[updateField] = updateValue;
-  console.log("setObj: ", setObj);
   Trip.findByIdAndUpdate(tripId, setObj)
     .exec()
     .then(updatedTrip => {

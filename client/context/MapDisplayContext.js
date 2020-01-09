@@ -62,8 +62,6 @@ export const MapDisplayProvider = (props) => {
           ...mapDisplayState,
           trip,
         });
-        console.log('trip: ', trip)
-        console.log(`mapDisplayState: `, mapDisplayState);
       })
       .catch(err => {
         console.log(`ERROR: ${err}`);
