@@ -17,7 +17,7 @@ userController.verifyUser = (req, res, next) => {
         res.locals.isVerified = isVerified;
         return next();
       }
-      next();
+      return next();
     })
     .catch(err => {
       return next({
