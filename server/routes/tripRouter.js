@@ -1,35 +1,34 @@
-const express = require('express');
-const tripController = require('../controllers/tripController');
+const express = require("express");
+const tripController = require("../controllers/tripController");
 
 const router = express.Router();
 
 // create a new trip
-router.post('/create',
-  tripController.createTrip,
-  (req, res, next) => {
-    res.status(200).json(res.locals.newTrip);
-  });
+router.post("/create", tripController.createTrip, (req, res, next) => {
+  res.status(200).json(res.locals.newTrip);
+});
 
 // get specific trip info
-router.get('/:tripId',
-  tripController.getTripById,
-  (req, res, next) => {
-    res.status(200).json(res.locals.trip);
-  });
+router.get("/:tripId", tripController.getTripById, (req, res, next) => {
+  res.status(200).json(res.locals.trip);
+});
+
+// Get all trips
+router.get("/all", tripController.findAllDestinations, (req, res, next) => {
+  res.status(200).json(res.locals.destinations);
+});
 
 // update specific trip
-router.patch('/:tripId',
-  tripController.updateTrip,
-  (req, res, next) => {
-    res.status(200).json({ [res.locals.updateField]: res.locals.updatedFieldValue });
-  });
+router.patch("/:tripId", tripController.updateTrip, (req, res, next) => {
+  res
+    .status(200)
+    .json({ [res.locals.updateField]: res.locals.updatedFieldValue });
+});
 
 // delete specific trip
-router.delete('/:tripId',
-  tripController.deleteTrip,
-  (req, res, next) => {
-    res.status(200).json({ 'deleteSuccess': res.locals.deleteSuccess });
-  });
+router.delete("/:tripId", tripController.deleteTrip, (req, res, next) => {
+  res.status(200).json({ deleteSuccess: res.locals.deleteSuccess });
+});
 
 // get all finalStop markers for the main map
 // router.get('/markers/all',
