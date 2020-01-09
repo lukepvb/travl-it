@@ -17,25 +17,12 @@ const App = (props) => {
       <MapDisplayProvider>
       {/* header / title */}
       {/* map display */}
-      <div className="centerArea">
-        <div className="mapDisplay">
-            <MapDisplay />
-        </div>
-        <Animated animationIn="bounceInLeft" animationOut="fadeOut" isVisible={true}>
-          <h1 className="title">
-            Dear Travel Diary...
-          </h1>
-        </Animated>
-      </div>
-      <div className="infoBox">
+        <MapDisplay />
+          {/*<h1 className="title">*/}
+          {/*  Dear Travel Diary...*/}
+          {/*</h1>*/}
         <TagSearch/>
         {/* Tag and description to the right of the map */}
-        <Animated animationIn="bounceInRight" animationOut="fadeOut" isVisible={true}>
-          <MarkerInfoBox/>
-        </Animated>
-        <ImageDisplay/>
-      </div>
-      <MarkerForm/>
     </MapDisplayProvider>
     </div>
    )
