@@ -63,13 +63,18 @@ if (process.env.NODE_ENV === "production") {
 //   }
 // );
 
-//this is a test to see if the query to the DB works - had to use another route because of the original '/' get request that serves the index.html
-app.get("/getUser", userController.getUserByUsername, (req, res) => {
-  res.status(200).send("Query successfull: Got user by username!");
-});
-
 app.get("/", (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "../client/index.html"));
+});
+
+// Get a specific user by their username
+app.use("", userController.getUserByUsername, (req, res) => {
+  res.status(200).send("Query successfull: Got specific user by username!");
+});
+
+// Create and add new user to the database
+app.post("/users", userController.createUser, (req, res) => {
+  res.status(200).send("Success: New user created in database!");
 });
 
 app.use("*", (req, res) => {
