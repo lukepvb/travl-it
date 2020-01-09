@@ -1,9 +1,9 @@
 import React, { useContext} from 'react';
 import useInput from "../hooks/UseInput";
-import {mapDisplayState} from '../context/mapDisplayState'
+import {MapDisplayContext} from '../context/MapDisplayContext'
 
 const Form = (props) => {
-    const {mapDisplayState, setMapDisplayState} = useContext(mapDisplayState);
+    const {mapDisplayState, setMapDisplayState} = useContext(MapDisplayContext);
     const [tagInfo, setTagInfo] = useInput('');
     const [descriptionInfo, setDescriptionInfo] = useInput('');
     const [imgURL, setImgURL] = useInput('');
