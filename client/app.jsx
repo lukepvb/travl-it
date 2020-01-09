@@ -9,6 +9,7 @@ import TagSearch from "./components/TagSearch";
 import style from './style.css'
 import { Animated } from 'react-animated-css';
 import { MapDisplayProvider} from "./context/MapDisplayContext";
+import { makeStyles } from '@material-ui/core/styles';
 //this one renders ya know the app.
 const App = (props) => {
    return (

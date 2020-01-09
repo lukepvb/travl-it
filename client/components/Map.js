@@ -3,6 +3,7 @@ import mapStyle from "../mapStyle";
 import React, {useContext, useEffect} from "react";
 import { MapDisplayContext } from "../context/MapDisplayContext";
 
+
 const Map = (props) =>  {
     const {mapDisplayState, clickMarker, clickMap, setMapDisplayState} = useContext(MapDisplayContext);
     let currentMarkerList = mapDisplayState.markerList;
