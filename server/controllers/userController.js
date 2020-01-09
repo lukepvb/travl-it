@@ -28,12 +28,11 @@ userController.createUser = (req, res, next) => {
 /* getUserByUsername - retrieve all users from the database by username and store it into res.locals */
 
 userController.getUserByUsername = (req, res, next) => {
-  const { username } = req.body;
+  const { username } = req.params;
 
   User.find({ username })
     .exec()
     .then(user => {
-      console.log;
       res.locals.user = user;
       return next();
     })
@@ -48,7 +47,7 @@ userController.getUserByUsername = (req, res, next) => {
 /* deleteUser = delete a user by username from the database */
 
 userController.deleteUserByUsername = (req, res, next) => {
-  const { username } = req.body;
+  const { username } = req.params;
 
   User.findOneAndDelete({ username })
     .exec()
