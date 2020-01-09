@@ -1,6 +1,6 @@
 body {
   background-image: linear-gradient(to top, #fff1eb 0%, #2ea0b4 100%);
-
+  
 }
 
 
@@ -13,7 +13,7 @@ body {
   font-family: 'Caveat', cursive;
 }
 .title {
-  display: inline-block;
+  display: inline-block; 
   position: relative;
   left: 500px;
   font-family: 'Caveat', cursive;
@@ -54,19 +54,18 @@ button{
 }
 
 .form{
-
+  
 
 }
 
 
 .centerArea{
-  display: block;
-  margin: auto;
+  display: flex;
+
 }
 
 .mapDisplay{
   display: inline-block;
-  margin: auto;
 }
 .infoBox{
   display: inline-block;
