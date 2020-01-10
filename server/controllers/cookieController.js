@@ -1,8 +1,5 @@
 const cookieController = {};
 
-/**
- * setCookie - set a cookie with a random number
- */
 cookieController.setCookie = (req, res, next) => {
   const { username } = req.body;
   res.cookie('username', username, {
