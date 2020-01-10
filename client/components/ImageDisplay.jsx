@@ -3,7 +3,7 @@ import {MapDisplayContext} from '../context/MapDisplayContext'
 
 
 
-const Image = (props) => {
+const ImageDisplay = (props) => {
   const { mapDisplayState } = useContext(MapDisplayContext);
   const images = [];
   if (mapDisplayState.clickedMarker.imgURL) {
@@ -19,4 +19,4 @@ const Image = (props) => {
   )
 };
 
-export default Image;
+export default ImageDisplay;

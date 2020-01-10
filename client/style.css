@@ -1,5 +1,4 @@
 body {
-  background-image: linear-gradient(to top, #fff1eb 0%, #2ea0b4 100%);
 
 }
 
@@ -69,7 +68,6 @@ button{
   margin: auto;
 }
 .infoBox{
-  display: inline-block;
   width: 100vw;
 }
 /* .testing{
