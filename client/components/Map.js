@@ -1,6 +1,6 @@
-import {GoogleMap, Marker, withGoogleMap, withScriptjs} from "react-google-maps";
+import { GoogleMap, Marker, withGoogleMap, withScriptjs } from "react-google-maps";
 import mapStyle from "../mapStyle";
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MapDisplayContext } from "../context/MapDisplayContext";
 
 //__________________________________________________
@@ -19,44 +19,41 @@ import { red } from '@material-ui/core/colors';
 
 
 
-const Map = (props) =>  {
-    const {mapDisplayState, clickMarker, clickMap, setMapDisplayState} = useContext(MapDisplayContext);
-    let currentMarkerList = mapDisplayState.markerList;
-    useEffect((state) =>{
-        console.log('YOOOO');
-        fetch('/api/trips/all')
-            .then(res => {
-                console.log('hellloooooo');
-                return res.json();
-            })
-            .then(res => {
-                console.log(res);
-                let markerList = [...mapDisplayState, ...res];
-                setMapDisplayState (
-                    ...mapDisplayState,
-                markerList
-                )
-            })
-        }, []);
+const Map = (props) => {
+  const { mapDisplayState, clickMarker, clickMap, setMapDisplayState } = useContext(MapDisplayContext);
 
+  // retrieve all markers, runs once
+  useEffect(() => {
+    fetch('/api/trips/all')
+      .then(res => res.json())
+      .then(finalStops => {
+        setMapDisplayState({
+          ...mapDisplayState,
+          finalStops
+        });
+      })
+      .catch(err => {
+        console.log(`ERROR: Map useEffect Fetch ERROR: ${err}`);
+      });
+  }, [mapDisplayState]);
 
-    return (
-        <GoogleMap
-            onClick={clickMap}
-            defaultZoom={4}
-            defaultCenter={{ lat: 39.82, lng: -98.57 }}
-            defaultOptions={{ styles: mapStyle }}
-        >
-            {currentMarkerList.map((marker, i) => (
-                <Marker
-                    onClick={clickMarker}
-                    key={i}
-                    position={{ lat: marker.location.lat, lng: marker.location.lng }}
-                />
-            ))
-            }
-        </GoogleMap>
-    )
+  return (
+    <GoogleMap
+      onClick={clickMap}
+      defaultZoom={4}
+      defaultCenter={{ lat: 39.82, lng: -98.57 }}
+      defaultOptions={{ styles: mapStyle }}
+    >
+      {mapDisplayState.finalStops.map((stop, i) => (
+        <Marker
+          onClick={clickMarker}
+          key={i}
+          position={{ lat: stop.location.coordinates[1], lng: stop.location.coordinates[0] }}
+        />
+      ))
+      }
+    </GoogleMap>
+  )
 };
 
 export default withScriptjs(withGoogleMap(Map));

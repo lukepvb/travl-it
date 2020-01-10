@@ -1,6 +1,4 @@
-//this is a react component wow
-
-import React, {useContext, memo} from 'react';
+import React from 'react';
 import Map from "./Map";
 import MarkerForm from './MarkerForm.jsx'
 import {makeStyles} from '@material-ui/core/styles';
