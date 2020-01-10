@@ -62,25 +62,12 @@ export const MapDisplayProvider = (props) => {
           ...mapDisplayState,
           trip,
         });
-      })
-      .catch(err => {
-        console.log(`ERROR: ${err}`);
-      })
-  };
-
-  const handleTagSubmit = () => {
-    const [searchTag, setSearchState, reset] = useInput('');
-    const savedTag = mapDisplayState.savedTag;
-    setMapDisplayState({
-      ...mapDisplayState,
-      savedTag,
-      searchTag
-    });
-  };
-
-  return (
-    <MapDisplayContext.Provider value={{ setMapDisplayState, mapDisplayState, clickMarker, clickMap, handleTagSubmit }}>
-      {props.children}
-    </MapDisplayContext.Provider>
-  )
+    };
+    return (
+        <MapDisplayContext.Provider 
+                value = {{mapDisplayState, clickMarker, clickMap, handleTagSubmit}}
+            >
+            {props.children}    
+        </MapDisplayContext.Provider>
+    )
 };
