@@ -11,6 +11,7 @@ import { Animated } from 'react-animated-css';
 import { MapDisplayProvider} from "./context/MapDisplayContext";
 import { MapCollapseProvider} from "./context/MapCollapseContext";
 import { makeStyles } from '@material-ui/core/styles';
+import TripDisplay from "./components/TripDisplay";
 //this one renders ya know the app.
 const App = (props) => {
    return (

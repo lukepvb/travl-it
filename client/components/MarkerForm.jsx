@@ -9,6 +9,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import TripDisplay from "./TripDisplay";
+import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -71,7 +73,9 @@ const Form = (props) => {
                 <Typography component="h3" variant="h5">
                     Create A Trip...
                 </Typography>
-                <form className={classes.form} noValidate
+                <form
+                    className={classes.form}
+                    noValidate
                     onSubmit={handleSubmission}
                 >
                     <TextField
@@ -95,6 +99,7 @@ const Form = (props) => {
                         label="Trip Description"
                         id="tripDescription"
                     />
+                    <Link to={TripDisplay}>
                     <Button
                         type="submit"
                         fullWidth
@@ -102,8 +107,9 @@ const Form = (props) => {
                         color="primary"
                         className={classes.submit}
                     >
-                        Create
+                            Create
                     </Button>
+                    </Link>
                 </form>
             </div>
         </Container>
